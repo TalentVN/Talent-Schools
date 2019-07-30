@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
+import { Routes, RouterModule, ExtraOptions } from '@angular/router';
+import { AuthGuard } from './core/_guards/auth.guard';
+import { RoleGuard } from './core/_guards/role.guard';
+import { LoginComponent } from './shared/components/login/login.component';
+import { RegisterComponent } from './shared/components/register/register.component';
 
 const routes: Routes = [
   {
@@ -13,8 +16,11 @@ const routes: Routes = [
   },
   {
     path: 'ranks',
-    loadChildren: () => import('./modules/ranks/ranks.module').then(s => s.RanksModule)
-  }
+    loadChildren: () => import('./modules/ranks/ranks.module').then(s => s.RanksModule),
+  },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
