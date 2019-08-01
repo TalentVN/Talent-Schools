@@ -18,17 +18,26 @@
                 </li> -->
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <button class="btn btn-light btn-sm" type="submit" [routerLink]="['login']" [routerLinkActive]="['active']">Log In</button>
-                <button class="btn btn-success active btn-sm" [routerLink]="['register']" [routerLinkActive]="['active']" type="submit">Sign Up</button>
+                <div *ngIf="authService.currentUserValue !== null">
+                    <a class="nav-item">Hi! {{authService.currentUserValue.firstName}}</a>
+                    <button class="btn btn-success active btn-sm ml-2" (click)="logout()" type="submit">Log Out</button>
+                </div>
+                <div *ngIf="authService.currentUserValue === null">
+                    <button class="btn btn-light btn-sm" type="submit" [routerLink]="['login']" [routerLinkActive]="['active']">Log In</button>
+                    <button class="btn btn-success active btn-sm" [routerLink]="['register']" [routerLinkActive]="['active']" type="submit">Sign Up</button>
+                </div>
+
             </form>
         </div>
     </div>
 </nav>
-<ul class="nav sticky-top container nav-pills">
-    <li class="nav-item">
-        <a class="nav-link text-success" [routerLink]="['schools/search']" [routerLinkActive]="['active']">School Search</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-success" [routerLink]="['ranks']" [routerLinkActive]="['active']">School Rankings</a>
-    </li>
-</ul>
+<div class="sticky-top" style="background-color: #f2f2f2">
+    <ul class="nav container nav-pills">
+        <li class="nav-item">
+            <a class="nav-link text-success" [routerLink]="['schools/search']" [routerLinkActive]="['active']">School Search</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-success" [routerLink]="['ranks']" [routerLinkActive]="['active']">School Rankings</a>
+        </li>
+    </ul>
+</div>
