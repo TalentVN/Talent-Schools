@@ -16,6 +16,11 @@ namespace TSM.Services
 
         public EmailService(IOptions<EmailSetting> settings)
         {
+            if (settings == null)
+            {
+                throw new ArgumentNullException(nameof(settings));
+            }
+
             _settings = settings.Value;
         }
         public Task SendEmailAsync(string email, string subject, string message)

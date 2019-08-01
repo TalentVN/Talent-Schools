@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSM", "TSM\TSM.csproj", "{437BD4D8-6FB6-4E12-ABAA-2AC6CF0E5F5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSM", "TSM\TSM.csproj", "{437BD4D8-6FB6-4E12-ABAA-2AC6CF0E5F5D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7BA03A7A-9D52-4BF5-A03F-DCF5E5305A04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSM.UnitTest", "TSM.UnitTest\TSM.UnitTest.csproj", "{4D56B0BA-EE62-4019-9E87-9E3789BB9896}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{437BD4D8-6FB6-4E12-ABAA-2AC6CF0E5F5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{437BD4D8-6FB6-4E12-ABAA-2AC6CF0E5F5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{437BD4D8-6FB6-4E12-ABAA-2AC6CF0E5F5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D56B0BA-EE62-4019-9E87-9E3789BB9896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D56B0BA-EE62-4019-9E87-9E3789BB9896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D56B0BA-EE62-4019-9E87-9E3789BB9896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D56B0BA-EE62-4019-9E87-9E3789BB9896}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D56B0BA-EE62-4019-9E87-9E3789BB9896} = {7BA03A7A-9D52-4BF5-A03F-DCF5E5305A04}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B825AED-00AB-4B56-B1D0-DFBC169DC07D}

@@ -25,8 +25,8 @@ namespace TSM.Controllers
             IAppLogger<EducationProgramsController> logger,
             IEducationProgramService educationProgramService)
         {
-            _logger = logger;
-            _educationProgramService = educationProgramService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _educationProgramService = educationProgramService ?? throw new ArgumentNullException(nameof(educationProgramService));
         }
 
         [HttpGet]

@@ -61,11 +61,15 @@ namespace TSM
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddTransient<IEmailService, EmailService>();
+
             services.AddScoped<IEducationProgramService, EducationProgramService>();
 
             services.AddScoped<ISchoolEducationProgramService, SchoolEducationProgramService>();
             services.AddScoped<ISchoolMajorService, SchoolMajorService>();
             services.AddScoped<ISchoolService, SchoolService>();
+
+            services.AddScoped<IMajorService, MajorService>();
+            services.AddScoped<IRatingService, RatingService>();
 
             // Settings
             services.Configure<EmailSetting>(options => Configuration.GetSection("EmailSetting").Bind(options));

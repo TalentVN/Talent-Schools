@@ -24,8 +24,8 @@ namespace TSM.Controllers
             IAppLogger<MajorsController> logger,
             IMajorService majorService)
         {
-            _logger = logger;
-            _majorService = majorService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _majorService = majorService ?? throw new ArgumentNullException(nameof(majorService));
         }
 
         [HttpGet]
