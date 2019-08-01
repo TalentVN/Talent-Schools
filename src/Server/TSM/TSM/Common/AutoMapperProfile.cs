@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TSM.Data.Entities;
+using TSM.Models;
 using TSM.Models.ResponseModels;
 
 namespace TSM.Common
@@ -14,6 +16,11 @@ namespace TSM.Common
         {
             CreateMap<IdentityResult, CreateUserResponseModel>();
             CreateMap<SignInResult, LoginResponseModel>();
+            CreateMap<School, SchoolResponseModel>();
+            CreateMap<Location, LocationResponseModel>();
+            CreateMap<EducationProgram, EducationProgramModel>();
+            CreateMap<Major, MajorModel>();
+            CreateMap<Rating, RatingModel>();
         }
     }
 }

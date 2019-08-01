@@ -45,6 +45,8 @@ namespace TSM
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            // add-migration InitAppData -context TSM.Data.Application.TSMContext -o Data/Application/Migrations
+            // update-database -context TSM.Data.Application.TSMContext
             services.AddDbContext<TSMContext>(options =>
                                        options.UseSqlServer(Configuration.GetConnectionString("TSMConnection")));
 
@@ -59,6 +61,7 @@ namespace TSM
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<IEducationProgramService, EducationProgramService>();
 
             // Settings
             services.Configure<EmailSetting>(options => Configuration.GetSection("EmailSetting").Bind(options));
@@ -149,9 +152,10 @@ namespace TSM
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager, TSMContext context)
         {
             _ = AppIdentityContextSeed.SeedAsync(userManager);
+            _ = TSMContextSeed.SeedAsync(context);
 
             if (env.IsDevelopment())
             {
