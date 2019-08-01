@@ -4,18 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using TSM.Common.Enums;
 
-namespace TSM.Models.ResponseModels
+namespace TSM.Models.RequestModels
 {
-    public class SchoolResponseModel
+    public class CreateSchoolRequestModel
     {
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
 
         public string Code { get; set; }
-        
+
         public string Website { get; set; }
-        
+
         public string CoverUrl { get; set; }
 
         public int StudentCount { get; set; }
@@ -26,6 +24,6 @@ namespace TSM.Models.ResponseModels
 
         public SchoolType SchoolType { get; set; }
 
-        public LocationResponseModel Location { get; set; }
+        public LocationRequestModel Location { get; set; }
     }
 }

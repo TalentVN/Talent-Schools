@@ -23,7 +23,6 @@ namespace TSM.Data.Application
 
         public DbSet<Location> Locations { get; set; }
         public DbSet<Country> Countries { get; set; }
-        public DbSet<Area> Areas { get; set; }
         public DbSet<City> Cities { get; set; }
 
         public DbSet<EducationProgram> EducationPrograms { get; set; }

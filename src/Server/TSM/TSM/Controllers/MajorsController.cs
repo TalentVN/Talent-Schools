@@ -7,100 +7,69 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TSM.Data.Application;
 using TSM.Data.Entities;
+using TSM.Interfaces;
+using TSM.Logging;
+using TSM.Models;
 
 namespace TSM.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class MajorsController : ControllerBase
     {
-        private readonly TSMContext _context;
+        private readonly IAppLogger<MajorsController> _logger;
+        private readonly IMajorService _majorService;
 
-        public MajorsController(TSMContext context)
+        public MajorsController(
+            IAppLogger<MajorsController> logger,
+            IMajorService majorService)
         {
-            _context = context;
+            _logger = logger;
+            _majorService = majorService;
         }
 
-        // GET: api/Majors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Major>>> GetMajors()
+        public async Task<ActionResult<IEnumerable<MajorModel>>> GetMajors()
         {
-            return await _context.Majors.ToListAsync();
+            _logger.LogInformation("GetMajors");
+
+            var majors = await _majorService.GetMajors();
+            return Ok(majors);
         }
 
-        // GET: api/Majors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Major>> GetMajor(Guid id)
+        public async Task<ActionResult<MajorModel>> GetMajor(Guid id)
         {
-            var major = await _context.Majors.FindAsync(id);
+            _logger.LogInformation($"GetMajor {id}");
+
+            var major = await _majorService.GetMajor(id);
 
             if (major == null)
             {
                 return NotFound();
             }
 
-            return major;
+            return Ok(major);
         }
 
-        // PUT: api/Majors/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMajor(Guid id, Major major)
-        {
-            if (id != major.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(major).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MajorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Majors
         [HttpPost]
-        public async Task<ActionResult<Major>> PostMajor(Major major)
+        public async Task<ActionResult<MajorModel>> PostMajor(MajorModel majorModel)
         {
-            _context.Majors.Add(major);
-            await _context.SaveChangesAsync();
+            _logger.LogInformation($"PostMajor {majorModel}");
 
-            return CreatedAtAction("GetMajor", new { id = major.Id }, major);
+            var major = await _majorService.CreateMajor(majorModel);
+
+            return Ok(major);
         }
 
-        // DELETE: api/Majors/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Major>> DeleteMajor(Guid id)
+        public async Task<IActionResult> DeleteMajor(Guid id)
         {
-            var major = await _context.Majors.FindAsync(id);
-            if (major == null)
-            {
-                return NotFound();
-            }
+            _logger.LogInformation($"DeleteMajor {id}");
 
-            _context.Majors.Remove(major);
-            await _context.SaveChangesAsync();
-
-            return major;
+            await _majorService.DeleteMajor(id);
+            return Ok();
         }
 
-        private bool MajorExists(Guid id)
-        {
-            return _context.Majors.Any(e => e.Id == id);
-        }
     }
 }

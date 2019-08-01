@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TSM.Data.Application;
 using TSM.Data.Entities;
+using TSM.Interfaces;
+using TSM.Logging;
+using TSM.Models;
+using TSM.Models.RequestModels;
+using TSM.Models.ResponseModels;
 
 namespace TSM.Controllers
 {
@@ -14,93 +19,107 @@ namespace TSM.Controllers
     [ApiController]
     public class SchoolsController : ControllerBase
     {
-        private readonly TSMContext _context;
+        private readonly IAppLogger<SchoolsController> _logger;
+        private readonly ISchoolService _schoolService;
+        private readonly ISchoolEducationProgramService  _schoolEducationProgramService;
+        private readonly ISchoolMajorService _schoolMajorService;
 
-        public SchoolsController(TSMContext context)
+        public SchoolsController(
+            IAppLogger<SchoolsController> logger,
+            ISchoolService schoolService,
+            ISchoolEducationProgramService schoolEducationProgramService,
+            ISchoolMajorService schoolMajorService)
         {
-            _context = context;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _schoolService = schoolService ?? throw new ArgumentNullException(nameof(schoolService));
+            _schoolEducationProgramService = schoolEducationProgramService ?? throw new ArgumentNullException(nameof(schoolEducationProgramService));
+            _schoolMajorService = schoolMajorService ?? throw new ArgumentNullException(nameof(schoolMajorService));
         }
 
-        // GET: api/Schools
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<School>>> GetSchools()
+        public async Task<ActionResult<IEnumerable<SchoolResponseModel>>> GetSchools()
         {
-            return await _context.Schools.ToListAsync();
+            var schools = await _schoolService.GetSchools();
+            return Ok(schools);
         }
 
-        // GET: api/Schools/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<School>> GetSchool(Guid id)
+        public async Task<ActionResult<SchoolResponseModel>> GetSchool(Guid id)
         {
-            var school = await _context.Schools.FindAsync(id);
+            var school = await _schoolService.GetSchool(id);
 
             if (school == null)
             {
                 return NotFound();
             }
 
-            return school;
+            return Ok(school);
         }
 
-        // PUT: api/Schools/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSchool(Guid id, School school)
-        {
-            if (id != school.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(school).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SchoolExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Schools
         [HttpPost]
-        public async Task<ActionResult<School>> PostSchool(School school)
+        public async Task<ActionResult<SchoolResponseModel>> PostSchool(CreateSchoolRequestModel requestModel)
         {
-            _context.Schools.Add(school);
-            await _context.SaveChangesAsync();
+            var school = await _schoolService.CreateSchool(requestModel);
 
-            return CreatedAtAction("GetSchool", new { id = school.Id }, school);
+            return Ok(school);
         }
 
-        // DELETE: api/Schools/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<School>> DeleteSchool(Guid id)
+        [HttpGet("{id}/majors")]
+        public async Task<ActionResult<IEnumerable<MajorModel>>> GetSchoolMajors(Guid id)
         {
-            var school = await _context.Schools.FindAsync(id);
-            if (school == null)
+            var majors = await _schoolMajorService.SchoolMajors(id);
+
+            if (majors == null)
             {
                 return NotFound();
             }
 
-            _context.Schools.Remove(school);
-            await _context.SaveChangesAsync();
-
-            return school;
+            return Ok(majors);
         }
 
-        private bool SchoolExists(Guid id)
+        [HttpPost("{id}/majors")]
+        public async Task<IActionResult> PostSchoolMajors(Guid id, List<Guid> majorIds)
         {
-            return _context.Schools.Any(e => e.Id == id);
+            await _schoolMajorService.AddSchoolMajors(id, majorIds);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}/majors")]
+        public async Task<IActionResult> DeleteSchoolMajors(Guid id, List<Guid> majorIds)
+        {
+            await _schoolMajorService.RemoveSchoolMajors(id, majorIds);
+
+            return Ok();
+        }
+
+        [HttpGet("{id}/programs")]
+        public async Task<ActionResult<IEnumerable<MajorModel>>> GetSchoolPrograms(Guid id)
+        {
+            var programs = await _schoolEducationProgramService.SchoolEducationPrograms(id);
+
+            if (programs == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(programs);
+        }
+
+        [HttpPost("{id}/programs")]
+        public async Task<IActionResult> PostSchoolPrograms(Guid id, List<Guid> programIds)
+        {
+            await _schoolEducationProgramService.AddSchoolEducationPrograms(id, programIds);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}/programs")]
+        public async Task<IActionResult> DeleteSchoolPrograms(Guid id, List<Guid> programIds)
+        {
+            await _schoolEducationProgramService.RemoveSchoolEducationPrograms(id, programIds);
+
+            return Ok();
         }
     }
 }

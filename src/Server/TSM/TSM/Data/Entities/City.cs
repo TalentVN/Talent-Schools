@@ -11,8 +11,8 @@ namespace TSM.Data.Entities
 
         public string Code { get; set; }
 
-        public Guid AreaId { get; set; }
+        // public Guid AreaId { get; set; }
 
-        public Area Area { get; set; }
+        // public Area Area { get; set; }
     }
 }

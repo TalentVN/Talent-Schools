@@ -9,120 +9,69 @@ using Microsoft.EntityFrameworkCore;
 using TSM.Data.Application;
 using TSM.Data.Entities;
 using TSM.Interfaces;
+using TSM.Logging;
 using TSM.Models;
 
 namespace TSM.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class EducationProgramsController : ControllerBase
     {
-        private readonly TSMContext _context;
-        private readonly IMapper _mapper;
+        private readonly IAppLogger<EducationProgramsController> _logger;
         private readonly IEducationProgramService _educationProgramService;
 
         public EducationProgramsController(
-            TSMContext context,
-            IMapper mapper,
+            IAppLogger<EducationProgramsController> logger,
             IEducationProgramService educationProgramService)
         {
-            _context = context;
-            _mapper = mapper;
+            _logger = logger;
             _educationProgramService = educationProgramService;
         }
 
-        // GET: api/EducationPrograms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EducationProgram>>> GetEducationPrograms()
+        public async Task<ActionResult<IEnumerable<EducationProgramModel>>> GetEducationPrograms()
         {
-            return await _context.EducationPrograms.ToListAsync();
-        }
+            _logger.LogInformation("GetEducationPrograms");
 
-        // GET: api/EducationPrograms/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<EducationProgram>> GetEducationProgram(Guid id)
-        {
-            var educationProgram = await _context.EducationPrograms.FindAsync(id);
-
-            if (educationProgram == null)
-            {
-                return NotFound();
-            }
-
-            return educationProgram;
-        }
-
-        // GET: api/EducationPrograms
-        [HttpPost("SchoolEducationPrograms")]
-        public async Task<ActionResult<IEnumerable<EducationProgramModel>>> GetBySchoolId(Guid schoolId)
-        {
-            var programs = await _educationProgramService.GetBySchoolId(schoolId);
-
-            if (programs == null)
-            {
-                return NotFound();
-            }
+            var programs = await _educationProgramService.GetEducationPrograms();
 
             return Ok(programs);
         }
 
-        // PUT: api/EducationPrograms/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEducationProgram(Guid id, EducationProgram educationProgram)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<EducationProgramModel>> GetEducationProgram(Guid id)
         {
-            if (id != educationProgram.Id)
-            {
-                return BadRequest();
-            }
+            _logger.LogInformation($"GetMajor {id}");
 
-            _context.Entry(educationProgram).State = EntityState.Modified;
+            var program = await _educationProgramService.GetEducationProgram(id);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EducationProgramExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<EducationProgram>> PostEducationProgram(EducationProgram educationProgram)
-        {
-            _context.EducationPrograms.Add(educationProgram);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetEducationProgram", new { id = educationProgram.Id }, educationProgram);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<EducationProgram>> DeleteEducationProgram(Guid id)
-        {
-            var educationProgram = await _context.EducationPrograms.FindAsync(id);
-            if (educationProgram == null)
+            if (program == null)
             {
                 return NotFound();
             }
 
-            _context.EducationPrograms.Remove(educationProgram);
-            await _context.SaveChangesAsync();
-
-            return educationProgram;
+            return Ok(program);
         }
 
-        private bool EducationProgramExists(Guid id)
+        [HttpPost]
+        public async Task<ActionResult<EducationProgramModel>> PostEducationProgram(EducationProgramModel educationProgram)
         {
-            return _context.EducationPrograms.Any(e => e.Id == id);
+            _logger.LogInformation($"PostEducationProgram {educationProgram}");
+
+            var program = await _educationProgramService.CreateEducationProgram(educationProgram);
+
+            return Ok(program);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEducationProgram(Guid id)
+        {
+            _logger.LogInformation($"DeleteEducationProgram {id}");
+
+            await _educationProgramService.DeleteEducationProgram(id);
+
+            return Ok();
         }
     }
 }

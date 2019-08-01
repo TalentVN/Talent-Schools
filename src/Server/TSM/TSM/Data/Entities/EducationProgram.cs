@@ -7,6 +7,18 @@ namespace TSM.Data.Entities
 {
     public class EducationProgram : EntityBase
     {
+        public EducationProgram()
+        {
+
+        }
+
+        public EducationProgram(string name, string description, string code)
+        {
+            Name = name;
+            Description = description;
+            Code = code;
+        }
+
         public string Name { get; set; }
 
         public string Description { get; set; }

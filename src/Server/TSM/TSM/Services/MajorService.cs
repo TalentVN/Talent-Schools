@@ -21,8 +21,8 @@ namespace TSM.Services
             IMapper mapper,
             TSMContext context)
         {
-            _mapper = mapper;
-            _context = context;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         // Must to implement paging with all features listAll
@@ -40,26 +40,13 @@ namespace TSM.Services
             return _mapper.Map<MajorModel>(major);
         }
 
-        public async Task<IEnumerable<MajorModel>> GetMajorsBySchoolId(Guid schoolId)
-        {
-            var majors = await _context.SchoolMajors
-                                            .Where(x => x.SchoolId == schoolId)
-                                            .Select(p => p.Major)
-                                            .ToListAsync();
-
-            return _mapper.Map<IEnumerable<MajorModel>>(majors);
-        }
-
         public async Task<MajorModel> CreateMajor(MajorModel majorModel)
         {
-            Major major = new Major()
-            {
-                Code = majorModel.Code,
-                Name = majorModel.Name,
-                Description = majorModel.Description
-            };
+            Major major = new Major(majorModel.Name, majorModel.Description, majorModel.Code);
 
             await _context.Majors.AddAsync(major);
+
+            await _context.SaveChangesAsync();
 
             return _mapper.Map<MajorModel>(major);
         }

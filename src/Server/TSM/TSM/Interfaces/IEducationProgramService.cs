@@ -8,6 +8,9 @@ namespace TSM.Interfaces
 {
     public interface IEducationProgramService
     {
-        Task<IEnumerable<EducationProgramModel>> GetEducationProgramsBySchoolId(Guid schoolId);
+        Task<IEnumerable<EducationProgramModel>> GetEducationPrograms();
+        Task<EducationProgramModel> GetEducationProgram(Guid id);
+        Task<EducationProgramModel> CreateEducationProgram(EducationProgramModel model);
+        Task DeleteEducationProgram(Guid id);
     }
 }

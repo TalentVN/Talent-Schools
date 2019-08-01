@@ -11,6 +11,6 @@ namespace TSM.Data.Entities
 
         public string Name { get; set; }
 
-        public virtual ICollection<Area> Areas { get; set; }
+        public virtual ICollection<City> Cities { get; set; }
     }
 }

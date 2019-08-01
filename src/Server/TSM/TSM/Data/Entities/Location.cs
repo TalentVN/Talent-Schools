@@ -7,15 +7,32 @@ namespace TSM.Data.Entities
 {
     public class Location : EntityBase
     {
+        public Location()
+        {
+
+        }
+
+        public Location(Guid cityId, Guid countryId, string street, string ward, string district)
+        {
+            CityId = cityId;
+            CountryId = countryId;
+
+            Street = street;
+            Ward = ward;
+            District = district;
+        }
+
         public string Street { get; set; } // Đường, thôn, xóm
 
         public string Ward { get; set; } // Phường, xã
 
         public string District { get; set; } // Quận, huyện
 
+        public Guid CityId { get; set; }
+
         public City City { get; set; } // Tỉnh, thành phố
 
-        public Area Area { get; set; } // Vùng, khu vực
+        public Guid CountryId { get; set; }
 
         public Country Country { get; set; } // Quốc gia
 
@@ -23,7 +40,8 @@ namespace TSM.Data.Entities
 
         public School School { get; set; }
 
-        public string Address {
+        public string Address
+        {
             get
             {
                 return City.Name + "," + Country.Name;
