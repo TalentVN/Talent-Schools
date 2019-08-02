@@ -25,6 +25,8 @@ namespace TSM.Data.Entities
 
         public string Code { get; set; }
 
+        public virtual ICollection<ProgramScore> ProgramScores { get; set; }
+
         public virtual ICollection<SchoolEducationProgram> SchoolEducationPrograms { get; set; }
     }
 }

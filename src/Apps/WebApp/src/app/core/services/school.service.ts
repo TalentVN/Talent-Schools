@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { SchoolModel } from '../../shared/models/School.model';
 import { MajorModel } from '../../shared/models/Major.model';
 import { Observable } from 'rxjs';
+import { ProgramModel } from 'src/app/shared/models/Program.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class SchoolService {
   }
 
   public getSchoolPrograms(schoolId: string): Observable<MajorModel[]> {
-    return this.httpClient.get<MajorModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolMajorApi(schoolId)}`);
+    return this.httpClient.get<ProgramModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolProgarmApi(schoolId)}`);
   }
 }
 

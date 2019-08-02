@@ -74,6 +74,15 @@ namespace TSM.Data.Application
 
                     await context.Schools.AddRangeAsync(schools);
 
+                    IEnumerable<Rating> ratings = new List<Rating>
+                    {
+                        new Rating(schools[0].Id, "No comment", 3),
+                        new Rating(schools[1].Id, "No comment", 3),
+                        new Rating(schools[2].Id, "No comment", 3),
+                    };
+
+                    await context.Ratings.AddRangeAsync(ratings);
+
                     IEnumerable<SchoolMajor> schoolMajors = new List<SchoolMajor> {
                         new SchoolMajor()
                         {

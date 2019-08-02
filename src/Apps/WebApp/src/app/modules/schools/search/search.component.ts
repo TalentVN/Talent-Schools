@@ -18,6 +18,7 @@ export class SearchComponent implements OnInit {
 
   constructor(
     public schoolService: SchoolService,
+    private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
     this.activatedRoute.queryParams.subscribe(p => console.log(p));
@@ -40,6 +41,10 @@ export class SearchComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  directSchoolProfie(schoolId: string) {
+    this.router.navigate([`/schools/${schoolId}`]);
   }
 
 }

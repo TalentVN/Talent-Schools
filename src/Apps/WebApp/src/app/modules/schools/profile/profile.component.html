@@ -1,4 +1,5 @@
-<div class="card container mb-lg-5">
+<!-- Start Cover -->
+<div *ngIf="schoolModel" class="card container mb-lg-5">
     <div class="row">
         <img src="http://covermyfb.com/media/covers/fBGeYvzQ4H5Yu1JI.jpg" height="100%" width="100%">
     </div>
@@ -6,7 +7,7 @@
         <div class="row">
             <div class="col text-left">
                 <h5 class="card-title">
-                    <b>Đại học sư phạm kĩ thuật TP. HCM </b>(UTE)
+                    <b>{{schoolModel.name}} </b>({{schoolModel.code}})
                 </h5>
                 <p type="text" class="btn-link text-success">#1 Những trường đại học tốt nhất</p>
                 <p>
@@ -18,14 +19,17 @@
                 </p>
             </div>
             <div class="col text-right">
-                <button type="button" class="btn btn-success">Go to</button>
+                <a *ngIf="schoolModel.website" [href]="schoolModel.website" type="button" class="btn btn-success bg-light">Go to</a>
             </div>
         </div>
     </div>
 </div>
+<!-- End Cover -->
 
-<div class="container">
+<!-- Start Body -->
+<div *ngIf="schoolModel" class="container">
     <div class="row">
+
         <div class="col-3">
             <div class="list-group-item">
                 <h6>Đánh giá</h6>
@@ -50,85 +54,64 @@
                 </li>
             </ul>
         </div>
+
         <div class="col-9">
             <div class="card mb-5">
                 <div class="card-header">
                     Giới thiệu
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <p class="card-text">{{schoolModel.description}}</p>
                 </div>
             </div>
-            <div class="card mb-5">
+            <div *ngIf="schoolModel.programs" class="card mb-5">
                 <div class="card-header">
-                    Chuyên ngành đào tạo
-                    <span class="badge badge-info badge-pill">15</span>
+                    Chương trình đào tạo
+                    <span class="badge badge-info badge-pill">{{schoolModel.programs.length}}</span>
                 </div>
-                <div class="card-body">
-                    <div id="accordion">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Collapsible Group Item #1
+                <div class="card-body" *ngFor="let program of schoolModel.programs">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        {{program.name}}
                                       </button>
-                                </h5>
-                            </div>
+                            </h5>
+                        </div>
 
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat
-                                    craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Collapsible Group Item #2
-                                      </button>
-                                </h5>
-                            </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat
-                                    craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Collapsible Group Item #3
-                                      </button>
-                                </h5>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                                <div class="card-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat
-                                    craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                                </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                {{program.description}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card mb-5">
+
+            <div *ngIf="schoolModel.majors" class="card mb-5">
                 <div class="card-header">
-                    Chương trình đào tạo
+                    Chuyên ngành đào tạo
+                    <span class="badge badge-info badge-pill">{{schoolModel.majors.length}}</span>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div class="card" *ngFor="let major of schoolModel.majors">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        {{major.name}}
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                {{major.description}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div class="card mb-5">
                 <div class="card-header">
                     Điểm trúng tuyển
@@ -152,29 +135,60 @@
         </div>
     </div>
 </div>
+<!-- End Body -->
 
 <!-- Rating -->
-<div class="container">
+<div *ngIf="schoolModel" class="container">
     <div class="card">
         <div class="card-header">
-            Đánh giá
+            <div class="row ml-1 mr-1">
+                <!-- Start Header query options -->
+                <ul class="nav nav-tabs mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Trường học</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular1'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Giáo viên</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular2'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Môi trường</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular3'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Chất lượng đào tạo</a>
+                    </li>
+                </ul>
+                <!-- End Header query options -->
+                <div class="form-inline my-2 my-lg-0">
+                    <a class="text-right">Đánh giá</a>
+                </div>
+
+            </div>
         </div>
         <div class="card-body">
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="list-group" *ngIf="schoolModel.ratings">
+                <a class="list-group-item" *ngFor="let rating of schoolModel.ratings">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">List group item heading</h5>
-                        <p>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </p>
+                        <h6 class="mb-1">Văn Nhật</h6>
+                        <ngb-rating value="3" max="5"></ngb-rating>
                         <small>3 days ago</small>
                     </div>
-                    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                    <p class="mb-1">{{rating.comment}}</p>
                 </a>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <ngb-rating max="5"></ngb-rating>
+                        <div class="input-group">
+                            <div class="input-group-prepend mr-5">
+                                <span class="input-group-text">Bình luận</span>
+                            </div>
+                            <textarea class="form-control mr-3" aria-label="With textarea"></textarea>
+                            <button class="btn btn btn-outline-success">Gửi</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

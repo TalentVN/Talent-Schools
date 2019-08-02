@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TSM.Data.Application.Migrations
 {
-    public partial class InitAppData : Migration
+    public partial class AddScore : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,7 +72,8 @@ namespace TSM.Data.Application.Migrations
                     StudentCount = table.Column<int>(nullable: false),
                     TuiTion = table.Column<long>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    SchoolType = table.Column<int>(nullable: false)
+                    SchoolType = table.Column<int>(nullable: false),
+                    Specialty = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +81,7 @@ namespace TSM.Data.Application.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Areas",
+                name: "Cities",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -89,15 +90,61 @@ namespace TSM.Data.Application.Migrations
                     ModifiedDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Code = table.Column<string>(nullable: true),
-                    CountryId = table.Column<Guid>(nullable: false)
+                    CountryId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Areas", x => x.Id);
+                    table.PrimaryKey("PK_Cities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Areas_Countries_CountryId",
+                        name: "FK_Cities_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProgramScores",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Year = table.Column<int>(nullable: false),
+                    Value = table.Column<decimal>(nullable: false),
+                    EducationProgramId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProgramScores", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProgramScores_EducationPrograms_EducationProgramId",
+                        column: x => x.EducationProgramId,
+                        principalTable: "EducationPrograms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MajorScores",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    Year = table.Column<int>(nullable: false),
+                    Value = table.Column<decimal>(nullable: false),
+                    MajorId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MajorScores", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MajorScores_Majors_MajorId",
+                        column: x => x.MajorId,
+                        principalTable: "Majors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -110,7 +157,7 @@ namespace TSM.Data.Application.Migrations
                     IsActive = table.Column<bool>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false),
-                    Comment = table.Column<string>(maxLength: 200, nullable: true),
+                    Comment = table.Column<string>(maxLength: 200, nullable: false),
                     RatingType = table.Column<int>(nullable: false),
                     Value = table.Column<int>(nullable: false),
                     SchoolId = table.Column<Guid>(nullable: false)
@@ -131,14 +178,14 @@ namespace TSM.Data.Application.Migrations
                 columns: table => new
                 {
                     SchoolId = table.Column<Guid>(nullable: false),
-                    ProgramId = table.Column<Guid>(nullable: false)
+                    EducationProgramId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SchoolEducationPrograms", x => new { x.SchoolId, x.ProgramId });
+                    table.PrimaryKey("PK_SchoolEducationPrograms", x => new { x.SchoolId, x.EducationProgramId });
                     table.ForeignKey(
-                        name: "FK_SchoolEducationPrograms_EducationPrograms_ProgramId",
-                        column: x => x.ProgramId,
+                        name: "FK_SchoolEducationPrograms_EducationPrograms_EducationProgramId",
+                        column: x => x.EducationProgramId,
                         principalTable: "EducationPrograms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -175,29 +222,6 @@ namespace TSM.Data.Application.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cities",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false),
-                    CreatedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Code = table.Column<string>(nullable: true),
-                    AreaId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cities_Areas_AreaId",
-                        column: x => x.AreaId,
-                        principalTable: "Areas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Locations",
                 columns: table => new
                 {
@@ -208,32 +232,25 @@ namespace TSM.Data.Application.Migrations
                     Street = table.Column<string>(nullable: true),
                     Ward = table.Column<string>(nullable: true),
                     District = table.Column<string>(nullable: true),
-                    CityId = table.Column<Guid>(nullable: true),
-                    AreaId = table.Column<Guid>(nullable: true),
-                    CountryId = table.Column<Guid>(nullable: true),
+                    CityId = table.Column<Guid>(nullable: false),
+                    CountryId = table.Column<Guid>(nullable: false),
                     SchoolId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Locations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Locations_Areas_AreaId",
-                        column: x => x.AreaId,
-                        principalTable: "Areas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Locations_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Locations_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Locations_Schools_SchoolId",
                         column: x => x.SchoolId,
@@ -243,19 +260,9 @@ namespace TSM.Data.Application.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Areas_CountryId",
-                table: "Areas",
-                column: "CountryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cities_AreaId",
+                name: "IX_Cities_CountryId",
                 table: "Cities",
-                column: "AreaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Locations_AreaId",
-                table: "Locations",
-                column: "AreaId");
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Locations_CityId",
@@ -274,14 +281,24 @@ namespace TSM.Data.Application.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_MajorScores_MajorId",
+                table: "MajorScores",
+                column: "MajorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProgramScores_EducationProgramId",
+                table: "ProgramScores",
+                column: "EducationProgramId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ratings_SchoolId",
                 table: "Ratings",
                 column: "SchoolId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SchoolEducationPrograms_ProgramId",
+                name: "IX_SchoolEducationPrograms_EducationProgramId",
                 table: "SchoolEducationPrograms",
-                column: "ProgramId");
+                column: "EducationProgramId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SchoolMajors_MajorId",
@@ -293,6 +310,12 @@ namespace TSM.Data.Application.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Locations");
+
+            migrationBuilder.DropTable(
+                name: "MajorScores");
+
+            migrationBuilder.DropTable(
+                name: "ProgramScores");
 
             migrationBuilder.DropTable(
                 name: "Ratings");
@@ -314,9 +337,6 @@ namespace TSM.Data.Application.Migrations
 
             migrationBuilder.DropTable(
                 name: "Schools");
-
-            migrationBuilder.DropTable(
-                name: "Areas");
 
             migrationBuilder.DropTable(
                 name: "Countries");

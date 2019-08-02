@@ -142,6 +142,54 @@ namespace TSM.Data.Application.Migrations
                     b.ToTable("Majors");
                 });
 
+            modelBuilder.Entity("TSM.Data.Entities.MajorScore", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<Guid>("MajorId");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<decimal>("Value");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MajorId");
+
+                    b.ToTable("MajorScores");
+                });
+
+            modelBuilder.Entity("TSM.Data.Entities.ProgramScore", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<Guid>("EducationProgramId");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<decimal>("Value");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EducationProgramId");
+
+                    b.ToTable("ProgramScores");
+                });
+
             modelBuilder.Entity("TSM.Data.Entities.Rating", b =>
                 {
                     b.Property<Guid>("Id")
@@ -252,6 +300,22 @@ namespace TSM.Data.Application.Migrations
                     b.HasOne("TSM.Data.Entities.School", "School")
                         .WithOne("Location")
                         .HasForeignKey("TSM.Data.Entities.Location", "SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TSM.Data.Entities.MajorScore", b =>
+                {
+                    b.HasOne("TSM.Data.Entities.Major", "Major")
+                        .WithMany()
+                        .HasForeignKey("MajorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TSM.Data.Entities.ProgramScore", b =>
+                {
+                    b.HasOne("TSM.Data.Entities.EducationProgram", "EducationProgram")
+                        .WithMany("ProgramScores")
+                        .HasForeignKey("EducationProgramId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
