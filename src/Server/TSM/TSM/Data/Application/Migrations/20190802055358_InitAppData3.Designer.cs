@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TSM.Data.Application;
 
 namespace TSM.Data.Application.Migrations
 {
     [DbContext(typeof(TSMContext))]
-    partial class TSMContextModelSnapshot : ModelSnapshot
+    [Migration("20190802055358_InitAppData3")]
+    partial class InitAppData3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

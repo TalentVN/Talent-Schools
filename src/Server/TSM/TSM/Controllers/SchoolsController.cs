@@ -36,6 +36,24 @@ namespace TSM.Controllers
             _schoolMajorService = schoolMajorService ?? throw new ArgumentNullException(nameof(schoolMajorService));
         }
 
+        /// <summary>
+        /// Used in search schools with autocomplete and will cache this
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <returns></returns>
+        [HttpPost("Search")]
+        public async Task<ActionResult<IEnumerable<SchoolResponseModel>>> SearchSchool(string searchString)
+        {
+            return Ok();
+        }
+
+
+        [HttpPost("Filter")]
+        public async Task<ActionResult<IEnumerable<SchoolResponseModel>>> FilterSchool(int filterType, SearchSchoolModel searchSchoolModel)
+        {
+            return Ok();
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SchoolResponseModel>>> GetSchools()
         {

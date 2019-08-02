@@ -18,7 +18,7 @@ export class SchoolService {
   ) { }
 
   public getSchools(): Observable<SchoolModel[]> {
-    return this.httpClient.get<SchoolModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolsApi}`);
+    return this.httpClient.get<SchoolModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolsApi()}`);
   }
 
   public getSchool(schoolId: string): Observable<SchoolModel> {
@@ -33,5 +33,8 @@ export class SchoolService {
     return this.httpClient.get<MajorModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolMajorApi(schoolId)}`);
   }
 
+  public getSchoolPrograms(schoolId: string): Observable<MajorModel[]> {
+    return this.httpClient.get<MajorModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolMajorApi(schoolId)}`);
+  }
 }
 

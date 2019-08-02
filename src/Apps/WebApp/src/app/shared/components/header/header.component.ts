@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router, CanActivate, ActivatedRoute, RouterStateSnapshot } from '@angular/router';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 
 @Component({
