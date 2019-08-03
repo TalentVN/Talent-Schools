@@ -15,7 +15,7 @@ namespace TSM.Data.Application.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -90,9 +90,9 @@ namespace TSM.Data.Application.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("CityId");
+                    b.Property<Guid>("CityId");
 
-                    b.Property<Guid?>("CountryId");
+                    b.Property<Guid>("CountryId");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -142,12 +142,61 @@ namespace TSM.Data.Application.Migrations
                     b.ToTable("Majors");
                 });
 
+            modelBuilder.Entity("TSM.Data.Entities.MajorScore", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<Guid>("MajorId");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<decimal>("Value");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MajorId");
+
+                    b.ToTable("MajorScores");
+                });
+
+            modelBuilder.Entity("TSM.Data.Entities.ProgramScore", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<Guid>("EducationProgramId");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<decimal>("Value");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EducationProgramId");
+
+                    b.ToTable("ProgramScores");
+                });
+
             modelBuilder.Entity("TSM.Data.Entities.Rating", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Comment")
+                        .IsRequired()
                         .HasMaxLength(200);
 
                     b.Property<DateTime>("CreatedDate");
@@ -189,6 +238,8 @@ namespace TSM.Data.Application.Migrations
                     b.Property<string>("Name");
 
                     b.Property<int>("SchoolType");
+
+                    b.Property<int>("Specialty");
 
                     b.Property<int>("StudentCount");
 
@@ -238,15 +289,33 @@ namespace TSM.Data.Application.Migrations
                 {
                     b.HasOne("TSM.Data.Entities.City", "City")
                         .WithMany()
-                        .HasForeignKey("CityId");
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TSM.Data.Entities.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TSM.Data.Entities.School", "School")
                         .WithOne("Location")
                         .HasForeignKey("TSM.Data.Entities.Location", "SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TSM.Data.Entities.MajorScore", b =>
+                {
+                    b.HasOne("TSM.Data.Entities.Major", "Major")
+                        .WithMany()
+                        .HasForeignKey("MajorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TSM.Data.Entities.ProgramScore", b =>
+                {
+                    b.HasOne("TSM.Data.Entities.EducationProgram", "EducationProgram")
+                        .WithMany("ProgramScores")
+                        .HasForeignKey("EducationProgramId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

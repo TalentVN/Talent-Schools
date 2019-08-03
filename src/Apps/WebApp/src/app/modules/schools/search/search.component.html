@@ -1,61 +1,93 @@
+<!-- Start Background Cover -->
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <h1 class="display-4">Fluid jumbotron</h1>
         <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
     </div>
 </div>
+<!-- End Background Cover -->
 
+<!-- Start Search Body -->
 <div class="container">
     <div class="row">
+
+        <!-- Start Left bar -->
         <div class="col-3">
             <div class="card">
                 <div class="card-body">
                     <a class="text-secondary">SCHOOL TYPE</a>
-                    <hr> <a class="text-secondary">ACADEMICS</a>
                     <ul class="list-group">
                         <li class="list-group-item">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                    value="option1" checked>
+                                <input class="form-check-input" type="radio" name="exampleRadios" checked>
                                 <label class="form-check-label">
-                                    Default radio
+                                    Công lập
                                 </label>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                    value="option1" checked>
+                                <input class="form-check-input" type="radio" name="exampleRadios">
                                 <label class="form-check-label">
-                                    Default radio
+                                    Tư thục
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                    <hr> <a class="text-secondary">ACADEMICS</a>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios1">
+                                <label class="form-check-label">
+                                    Đại học
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios1" checked>
+                                <label class="form-check-label">
+                                    Cao đẳng
                                 </label>
                             </div>
                         </li>
                     </ul>
 
-                    <hr> <a class="text-secondary">TUITION</a>
+                    <hr> <a class="text-secondary">HỌC PHÍ TRUNG BÌNH (1 năm)</a>
                     <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <span class="input-group-text"> 0 ==>  </span>
-                        </div>
-                        <input type="number" class="form-control" [(ngModel)]="sliderValue" min="1" max="100000">
+                        <input type="number" class="form-control mr-3" [(ngModel)]="sliderValue" min="1" max="100000">
                         <div class="input-group-append">
                             <span class="input-group-text">USD</span>
                         </div>
                     </div>
                     <input type="range" class="form-control" [(ngModel)]="sliderValue" min="1" max="100000">
-                    <hr> <a class="text-secondary">SPECIALTY</a>
+
+                    <hr> <a class="text-secondary">ĐIỂM TRÚNG TUYỂN</a>
+                    <div class="input-group mb-3">
+                        <input type="number" class="form-control mr-3" [(ngModel)]="minScore" min="0" max="29">
+                        <p>_</p>
+                        <input type="number" class="form-control ml-3" [(ngModel)]="maxScore" min="1" max="30">
+                    </div>
+
+                    <hr> <a class="text-secondary">LĨNH VỰC</a>
                     <ul class="list-group">
                         <li class="list-group-item">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label">Check me out</label>
+                                <label class="form-check-label">Kĩ thuật</label>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label">Check me out</label>
+                                <label class="form-check-label">Kinh tế</label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label">Tổng hợp</label>
                             </div>
                         </li>
                     </ul>
@@ -77,66 +109,58 @@
                 </div>
             </div>
         </div>
+        <!-- End Left bar -->
+
+        <!-- Start Display schools -->
         <div class="col-9">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['']" [routerLinkActive]="['active']">Best School</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['1']" [routerLinkActive]="['active']">Best Techer</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['2']" [routerLinkActive]="['active']">Best WorkPlace</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['3']" [routerLinkActive]="['active']">Best Education</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['4']" [routerLinkActive]="['active']">Best Largest</a>
-                </li>
-            </ul>
+            <div class="row ml-1 mr-1">
+                <!-- Start Header query options -->
+                <ul class="nav nav-tabs mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best School</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular1'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best Techer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular2'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best WorkPlace</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular3'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular4'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best Largest</a>
+                    </li>
+                </ul>
+                <!-- End Header query options -->
+                <div class="form-inline my-2 my-lg-0">
+                    <a *ngIf="schools" class="text-right text-sm text-muted">Kết quả: {{schools.length}}</a>
+                </div>
 
+            </div>
+
+            <!-- Start List Schools -->
             <div>
-                <div class="card mb-lg-3">
+                <div class="card mb-lg-3" *ngFor="let school of schools">
                     <div class="card-body">
                         <p type="text" class="btn-link text-success">#1 Những trường đại học tốt nhất</p>
-                        <h6 class="card-title">
-                            <b>Đại học sư phạm kĩ thuật TP. HCM </b>(UTE)
+                        <h6 class="card-text">
+                            <a [routerLink]="[]" (click)="directSchoolProfie(school.id)" class="text-dark">Đại học sư phạm kĩ thuật TP. HCM </a>(UTE)
                         </h6>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="card-link text-info">Card link</a>
-                    </div>
-                </div>
-
-                <div class="card mb-lg-3">
-                    <div class="card-body">
-                        <p type="text" class="btn-link text-success">#1 Những trường đại học tốt nhất</p>
-                        <h6 class="card-title">
-                            <b>Đại học sư phạm kĩ thuật TP. HCM </b>(UTE)
-                        </h6>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="card-link text-info">Card link</a>
-                    </div>
-                </div>
-
-                <div class="card mb-lg-3">
-                    <div class="card-body">
-                        <p type="text" class="btn-link text-success">#1 Những trường đại học tốt nhất</p>
-                        <h6 class="card-title">
-                            <b>Đại học sư phạm kĩ thuật TP. HCM </b>(UTE)
-                        </h6>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="card-link text-info">Card link</a>
+                        <p class="card-subtitle text-secondary mb-2">
+                            <a href="#" class="text-link text-secondary">University</a> -
+                            <a href="#" class="text-link text-secondary">Thu Duc, Viet Nam</a> -
+                            <a href="#" class="text-link text-warning">200 Review</a>
+                        </p>
+                        <p class="card-text">Với bề dày thành tích 56 năm (05/10/1962 –05/10/2018), từ khi thành lập đến nay, Trường ĐH SPKT TPHCM đã đào tạo và bồi dưỡng nguồn nhân lực cho hệ thống giáo dục nghề nghiệp cũng như cung cấp đội ngũ kỹ sư chất lượng cao cho cả
+                            nước, đặc biệt là góp sức to lớn vào thành tựu kinh tế xã hội của cả nước.</p>
+                        <a href="#" class="text-info float-right">Xem thêm</a>
                     </div>
                 </div>
             </div>
+            <!-- End List Schools -->
 
+            <!-- Start Paging -->
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                     <li class="page-item disabled">
@@ -150,6 +174,10 @@
                     </li>
                 </ul>
             </nav>
+            <!-- End Paging -->
+
         </div>
+        <!-- End Display schools -->
     </div>
 </div>
+<!-- End Search Body -->

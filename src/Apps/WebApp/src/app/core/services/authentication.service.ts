@@ -27,7 +27,7 @@ export class AuthenticationService {
       return;
     }
 
-    return this.http.post<any>(`${environment.authApi}api/v1/Identity`, userRegister)
+    return this.http.post<any>(`${environment.coreApi}/api/v1/Identity`, userRegister)
       .pipe(map(user => {
         return user;
       }));
@@ -39,7 +39,7 @@ export class AuthenticationService {
       code,
     };
 
-    return this.http.post<any>(`${environment.authApi}api/v1/Identity/ConfirmEmail/${userid}`, requestmodel)
+    return this.http.post<any>(`${environment.coreApi}/api/v1/Identity/ConfirmEmail/${userid}`, requestmodel)
       .pipe(map(result => {
         return result;
       }));
@@ -52,7 +52,7 @@ export class AuthenticationService {
       passWord: password,
     };
 
-    return this.http.post<any>(`${environment.authApi}api/v1/Identity/Login`, requestmodel)
+    return this.http.post<any>(`${environment.coreApi}/api/v1/Identity/Login`, requestmodel)
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
         if (user && user.token && user.succeeded === true) {
@@ -65,7 +65,7 @@ export class AuthenticationService {
       }));
   }
 
-  logout() {
+  public logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);

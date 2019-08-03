@@ -26,6 +26,8 @@ namespace TSM.Data.Entities
 
         public SchoolType SchoolType { get; set; }
 
+        public Specialty Specialty { get; set; }
+
         public virtual ICollection<SchoolEducationProgram> SchoolEducationPrograms { get; set; }
 
         public virtual ICollection<SchoolMajor> SchoolMajors { get; set; }

@@ -18,6 +18,11 @@ const routes: Routes = [
     path: 'ranks',
     loadChildren: () => import('./modules/ranks/ranks.module').then(s => s.RanksModule),
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./modules/admin/admin.module').then(s => s.AdminModule),
+    canActivate: [AuthGuard]
+  },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '**', redirectTo: '' },
