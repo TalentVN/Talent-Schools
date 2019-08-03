@@ -20,11 +20,12 @@
             <form class="form-inline my-2 my-lg-0">
                 <div *ngIf="authService.currentUserValue !== null">
                     <a class="nav-item">Hi! {{authService.currentUserValue.firstName}}</a>
-                    <button class="btn btn-success active btn-sm ml-2" (click)="logout()" type="submit">Log Out</button>
+                    <button *ngIf="authService.currentUserValue.jwtRole === 'Admin'" class="btn btn-light btn-sm ml-2" [routerLink]="['admin']">Admin</button>
+                    <button class="btn btn-success active btn-sm" (click)="logout()">Log Out</button>
                 </div>
                 <div *ngIf="authService.currentUserValue === null">
-                    <button class="btn btn-light btn-sm" type="submit" [routerLink]="['login']" [routerLinkActive]="['active']">Log In</button>
-                    <button class="btn btn-success active btn-sm" [routerLink]="['register']" [routerLinkActive]="['active']" type="submit">Sign Up</button>
+                    <button class="btn btn-light btn-sm" [routerLink]="['login']" [routerLinkActive]="['active']">Log In</button>
+                    <button class="btn btn-success active btn-sm" [routerLink]="['register']" [routerLinkActive]="['active']">Sign Up</button>
                 </div>
 
             </form>

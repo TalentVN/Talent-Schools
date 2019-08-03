@@ -82,6 +82,14 @@ namespace TSM.Controllers
             return Ok(school);
         }
 
+        [HttpPut]
+        public async Task<ActionResult<SchoolResponseModel>> PutSchool(UpdateSchoolRequestModel requestModel)
+        {
+            var school = await _schoolService.UpdateSchool(requestModel);
+
+            return Ok(school);
+        }
+
         [HttpGet("{id}/majors")]
         public async Task<ActionResult<IEnumerable<MajorModel>>> GetSchoolMajors(Guid id)
         {

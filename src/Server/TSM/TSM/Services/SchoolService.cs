@@ -2,12 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TSM.Data.Application;
 using TSM.Data.Entities;
 using TSM.Interfaces;
-using TSM.Logging;
 using TSM.Models.RequestModels;
 using TSM.Models.ResponseModels;
 
@@ -33,6 +31,7 @@ namespace TSM.Services
                                             .ThenInclude(l => l.Country)
                                         .Include(x => x.Location)
                                             .ThenInclude(l => l.City)
+                                        .AsNoTracking()
                                         .ToListAsync();
 
             return _mapper.Map<IEnumerable<SchoolResponseModel>>(schools);
@@ -45,6 +44,7 @@ namespace TSM.Services
                                             .ThenInclude(l => l.Country)
                                         .Include(x => x.Location)
                                             .ThenInclude(l => l.City)
+                                        .AsNoTracking()
                                         .SingleOrDefaultAsync(x => x.Id.Equals(id));
 
             return _mapper.Map<SchoolResponseModel>(school);
@@ -85,6 +85,39 @@ namespace TSM.Services
             await _context.SaveChangesAsync();
 
             return location;
+        }
+
+        public async Task<SchoolResponseModel> UpdateSchool(UpdateSchoolRequestModel requestModel)
+        {
+            var school = await _context.Schools
+                                        .Include(x => x.Location)
+                                        .SingleOrDefaultAsync(x => x.Equals(requestModel.Id));
+
+            school.Code = requestModel.Code;
+            school.CoverUrl = requestModel.CoverUrl;
+            school.Description = requestModel.Description;
+            school.Name = requestModel.Name;
+            school.TuiTion = requestModel.TuiTion;
+            school.SchoolType = requestModel.SchoolType;
+            school.Website = requestModel.Website;
+            school.Location.CountryId = requestModel.Location.CountryId;
+            school.Location.CityId = requestModel.Location.CityId;
+            school.Location.District = requestModel.Location.District;
+            school.Location.Ward = requestModel.Location.Ward;
+            school.Location.Street = requestModel.Location.Street;
+
+            _context.Schools.Update(school);
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<SchoolResponseModel>(school);
+        }
+
+        public async Task DeleteSchool(Guid id)
+        {
+            var school = await _context.Schools.SingleOrDefaultAsync(x => x.Id.Equals(id));
+
+            _context.Schools.Remove(school);
+            await _context.SaveChangesAsync();
         }
     }
 }
