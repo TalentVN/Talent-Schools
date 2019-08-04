@@ -3,5 +3,13 @@ export class RatingModel {
     comment: string;
     ratingType: number;
     value: number;
-    ratingOwner: string;
+    userId: string;
+    schoolId: string;
 }
+
+export class RatingUserModel {
+    id: string;
+    firstName: string;
+    lastName: string;
+}
+

@@ -14,28 +14,6 @@ export class RatingListComponent implements OnInit {
 
   ngOnInit() {
     // Mock ratings
-    this.ratings = [
-      {
-        id: '',
-        comment: 'Trường học tốt nhất tôi từng học',
-        ratingType: 1,
-        value: 5,
-        ratingOwner: 'Văn Nhật'
-      },
-      {
-        id: '',
-        comment: 'Trường học tốt nhất tôi từng học',
-        ratingType: 1,
-        value: 4,
-        ratingOwner: 'Văn Nhật'
-      }, {
-        id: '',
-        comment: 'Trường học tốt nhất tôi từng học',
-        ratingType: 1,
-        value: 3,
-        ratingOwner: 'Văn Nhật'
-      }
-    ];
   }
 
 }

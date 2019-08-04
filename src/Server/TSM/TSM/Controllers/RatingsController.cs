@@ -33,9 +33,9 @@ namespace TSM.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<RatingModel>> Post(Guid schoolId, RatingModel ratingModel)
+        public async Task<ActionResult<RatingModel>> Post(CreateRatingRequestModel ratingModel)
         {
-            var rating = await _ratingService.CreateRating(schoolId, ratingModel);
+            var rating = await _ratingService.CreateRating(ratingModel);
 
             return Ok(rating);
         }

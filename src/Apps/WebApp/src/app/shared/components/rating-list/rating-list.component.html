@@ -1,6 +1,6 @@
 <a class="list-group-item mb-1" *ngFor="let rating of ratings">
     <div class="d-flex w-100 justify-content-between">
-        <h6 class="mb-2">Văn Nhật</h6>
+        <h6 class="mb-2" *ngIf="rating.user">{{rating.user.firstName}}</h6>
         <ngb-rating class="rating" [(rate)]="rating.value" [readonly]="true" max="5"></ngb-rating>
         <small>3 days ago</small>
     </div>

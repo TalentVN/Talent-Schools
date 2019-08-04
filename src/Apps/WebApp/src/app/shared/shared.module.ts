@@ -6,10 +6,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { RatingFormComponent } from './components/rating-form/rating-form.component';
 import { RatingListComponent } from './components/rating-list/rating-list.component';
+import { ConfirmModalComponent } from './components/modals/confirm-modal/confirm-modal.component';
 
 
 @NgModule({
-  declarations: [RatingFormComponent, RatingListComponent],
+  declarations: [RatingFormComponent, RatingListComponent, ConfirmModalComponent],
   imports: [
     CommonModule,
     NgbModule,
@@ -22,6 +23,7 @@ import { RatingListComponent } from './components/rating-list/rating-list.compon
     NgbModule,
     FormsModule,
     ReactiveFormsModule
-  ]
+  ],
+  entryComponents: [ConfirmModalComponent]
 })
 export class SharedModule { }

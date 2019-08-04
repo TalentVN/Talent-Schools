@@ -166,10 +166,10 @@
         </div>
         <div class="card-body">
             <div class="list-group" *ngIf="schoolModel.ratings">
-                <app-rating-list></app-rating-list>
+                <app-rating-list [ratings]="schoolModel.ratings"></app-rating-list>
             </div>
 
-            <app-rating-form></app-rating-form>
+            <app-rating-form [schoolId]="schoolId"></app-rating-form>
         </div>
     </div>
 </div>

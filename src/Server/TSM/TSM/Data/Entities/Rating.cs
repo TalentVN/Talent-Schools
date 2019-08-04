@@ -9,7 +9,7 @@ namespace TSM.Data.Entities
 {
     public class Rating : EntityBase
     {
-        public Rating()
+        private Rating()
         {
 
         }
