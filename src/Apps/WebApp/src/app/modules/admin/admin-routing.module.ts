@@ -10,6 +10,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        redirectTo: '/admin/schools',
+        pathMatch: 'full'
+      },
+      {
+        path: 'schools',
         component: SchoolsAdminComponent
       }
     ]

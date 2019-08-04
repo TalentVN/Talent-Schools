@@ -1,5 +1,18 @@
-<ul>
-  <li>
-    <a></a>
-  </li>
-</ul>
+<h1>Schools</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Code</th>
+      <th scope="col">School Type</th>
+      <th scope="col">Website</th>
+      <th scope="col">Tuition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let school of schools; let i = index">
+      <th scope="row">{{i}}</th>
+    </tr>
+  </tbody>
+</table>
