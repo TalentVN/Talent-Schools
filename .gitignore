@@ -3,3 +3,4 @@
 obj
 bin
 src/Server/TSM/TSM/appsettings.Development.json
+src/Apps/WebApp/.vscode/launch.json
