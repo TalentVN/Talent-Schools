@@ -17,6 +17,5 @@ namespace TSM.Data.Entities
         public string JwtRole { get; set; }
 
         public string JwtToken { get; set; }
-
     }
 }

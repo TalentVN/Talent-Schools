@@ -76,9 +76,9 @@ namespace TSM.Data.Application
 
                     IEnumerable<Rating> ratings = new List<Rating>
                     {
-                        new Rating(schools[0].Id, "No comment", 3),
-                        new Rating(schools[1].Id, "No comment", 3),
-                        new Rating(schools[2].Id, "No comment", 3),
+                        new Rating(schools[0].Id, Guid.NewGuid(), Common.Enums.RatingType.ForSchool, "No comment", 3),
+                        new Rating(schools[1].Id,Guid.NewGuid(), Common.Enums.RatingType.ForSchool, "No comment", 3),
+                        new Rating(schools[2].Id,Guid.NewGuid(), Common.Enums.RatingType.ForSchool, "No comment", 3),
                     };
 
                     await context.Ratings.AddRangeAsync(ratings);

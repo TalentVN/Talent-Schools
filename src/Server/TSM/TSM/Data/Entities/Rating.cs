@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using TSM.Common.Enums;
 
 namespace TSM.Data.Entities
 {
@@ -13,18 +14,20 @@ namespace TSM.Data.Entities
 
         }
 
-        public Rating(Guid schoolId, string comment, int value)
+        public Rating(Guid schoolId,Guid userId, RatingType ratingType, string comment, int value)
         {
             SchoolId = schoolId;
             Comment = comment;
             Value = value;
+            UserId = userId;
+            RatingType = ratingType;
         }
 
         [MaxLength(200)]
         [Required]
         public string Comment { get; set; }
 
-        public int RatingType { get; set; }
+        public RatingType RatingType { get; set; }
 
         [Range(1,5)]
         [Required]
@@ -34,5 +37,10 @@ namespace TSM.Data.Entities
         public Guid SchoolId { get; set; }
 
         public School School { get; set; }
+
+        [Required]
+        public Guid UserId { get; set; }
+
+        public ApplicationUser User { get; set; }
     }
 }
