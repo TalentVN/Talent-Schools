@@ -3,4 +3,5 @@ export class RatingModel {
     comment: string;
     ratingType: number;
     value: number;
+    ratingOwner: string;
 }

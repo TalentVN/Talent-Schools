@@ -21,6 +21,14 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
+  public isLogin(): boolean {
+    if (this.currentUserSubject.value === null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   public register(userRegister: UserRegister) {
 
     if (!userRegister) {

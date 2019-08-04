@@ -166,14 +166,7 @@
         </div>
         <div class="card-body">
             <div class="list-group" *ngIf="schoolModel.ratings">
-                <a class="list-group-item" *ngFor="let rating of schoolModel.ratings">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-1">Văn Nhật</h6>
-                        <ngb-rating value="3" max="5"></ngb-rating>
-                        <small>3 days ago</small>
-                    </div>
-                    <p class="mb-1">{{rating.comment}}</p>
-                </a>
+                <app-rating-list></app-rating-list>
             </div>
 
             <app-rating-form></app-rating-form>

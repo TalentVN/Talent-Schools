@@ -1,23 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { RatingFormComponent } from './components/rating-form/rating-form.component';
+import { RatingListComponent } from './components/rating-list/rating-list.component';
 
 
 @NgModule({
-  declarations: [RatingFormComponent],
+  declarations: [RatingFormComponent, RatingListComponent],
   imports: [
     CommonModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     RatingFormComponent,
+    RatingListComponent,
     NgbModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }

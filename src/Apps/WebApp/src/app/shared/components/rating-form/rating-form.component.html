@@ -1,14 +1,33 @@
 <div class="card">
     <div class="card-body">
         <div class="form-group">
-            <ngb-rating max="5"></ngb-rating>
+            <div class="row">
+                <ngb-rating style="font-size: 2rem;" [formControl]="ctrl" max="5"></ngb-rating>
+                <span *ngIf="ctrl.value === 5">Excellent</span>
+                <span *ngIf="ctrl.value === 4">Good</span>
+                <span *ngIf="ctrl.value === 3">Average</span>
+                <span *ngIf="ctrl.value === 2">Bad</span>
+                <span *ngIf="ctrl.value === 1">So Bad</span>
+            </div>
+            <div class="form-text small">
+                <div *ngIf="ctrl.valid" class="text-success">Cảm ơn!</div>
+                <div *ngIf="ctrl.invalid" class="text-danger">Hãy chọn</div>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="input-group">
                 <div class="input-group-prepend mr-5">
                     <span class="input-group-text">Bình luận</span>
                 </div>
                 <textarea class="form-control mr-3" aria-label="With textarea"></textarea>
-                <button class="btn btn btn-outline-success">Gửi</button>
+                <button (click)="submitRating()" class="btn btn btn-outline-success">Gửi</button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- <ng-template #t let-fill="fill">
+    <span class="star" [class.full]="fill === 100">
+          <span class="half" [style.width.%]="fill"></span><i class="far fa-star"></i>
+    </span>
+</ng-template> -->

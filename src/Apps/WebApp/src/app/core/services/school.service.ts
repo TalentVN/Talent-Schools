@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { SchoolApi } from '../apis/school.api';
 import { environment } from '../../../environments/environment';
 
 import { SchoolModel } from '../../shared/models/School.model';
 import { MajorModel } from '../../shared/models/Major.model';
-import { Observable } from 'rxjs';
 import { ProgramModel } from 'src/app/shared/models/Program.model';
 
 @Injectable({
