@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { SchoolsAdminComponent } from './schools-admin/schools-admin.component';
 
 const routes: Routes = [
   {
@@ -15,7 +14,7 @@ const routes: Routes = [
       },
       {
         path: 'schools',
-        component: SchoolsAdminComponent
+        loadChildren: () => import('./schools-admin/schools-admin.module').then(s => s.SchoolsAdminModule)
       }
     ]
   }

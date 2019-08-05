@@ -8,11 +8,20 @@
       <th scope="col">School Type</th>
       <th scope="col">Website</th>
       <th scope="col">Tuition</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let school of schools; let i = index">
-      <th scope="row">{{i}}</th>
+      <th scope="row">{{i+1}}</th>
+      <td>{{school.name}}</td>
+      <td>{{school.code}}</td>
+      <td>{{school.schoolType}}</td>
+      <td>{{school.website}}</td>
+      <td>{{school.tuiTion}}</td>
+      <td>
+        <a [routerLink]="['edit']"></a>
+      </td>
     </tr>
   </tbody>
 </table>
