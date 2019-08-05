@@ -5,6 +5,7 @@ export class RatingModel {
     value: number;
     userId: string;
     schoolId: string;
+    createdDate: Date;
 }
 
 export class RatingUserModel {

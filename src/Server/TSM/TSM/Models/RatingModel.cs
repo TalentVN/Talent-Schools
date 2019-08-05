@@ -17,6 +17,8 @@ namespace TSM.Models
 
         public Guid UserId { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
         public UserResponseModel User { get; set; }
 
         public Guid SchoolId { get; set; }

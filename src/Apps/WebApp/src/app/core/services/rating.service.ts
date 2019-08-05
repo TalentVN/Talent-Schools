@@ -20,6 +20,10 @@ export class RatingService {
     return this.httpClient.get<RatingModel[]>(`${environment.coreApi}/${RatingApi.getRatingApi(schoolId)}`);
   }
 
+  public queryRatings(schoolId: string, ratingType: number): Observable<RatingModel[]> {
+    return this.httpClient.get<RatingModel[]>(`${environment.coreApi}/${RatingApi.queryRatingApi(schoolId, ratingType)}`);
+  }
+
   public createRatings(rating: CreateRatingModel): Observable<RatingModel> {
     return this.httpClient.post<RatingModel>(`${environment.coreApi}/${RatingApi.createRatingApi()}`, rating);
   }

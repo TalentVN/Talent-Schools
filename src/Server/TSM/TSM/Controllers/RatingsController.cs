@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TSM.Common.Enums;
 using TSM.Interfaces;
 using TSM.Logging;
 using TSM.Models;
@@ -28,6 +29,14 @@ namespace TSM.Controllers
         public async Task<ActionResult<IEnumerable<RatingModel>>> GetRatingsBySchoolId(Guid schoolId)
         {
             var ratings = await _ratingService.GetRatings(schoolId);
+
+            return Ok(ratings);
+        }
+
+        [HttpGet("Query")]
+        public async Task<ActionResult<IEnumerable<RatingModel>>> QueryRatings(Guid schoolId, RatingType ratingType)
+        {
+            var ratings = await _ratingService.QueryRatings(schoolId, ratingType);
 
             return Ok(ratings);
         }

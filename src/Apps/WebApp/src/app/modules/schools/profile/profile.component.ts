@@ -14,6 +14,7 @@ import { SchoolModel } from '../../../shared/models/School.model';
 })
 export class ProfileComponent implements OnInit {
   private schoolId: string;
+  public filter: number;
 
   public schoolModel: SchoolModel;
 
@@ -25,6 +26,7 @@ export class ProfileComponent implements OnInit {
     private ratingService: RatingService
   ) {
     this.subscribeRouter();
+    this.subcribeQueryParams();
   }
 
   ngOnInit() {
@@ -33,10 +35,17 @@ export class ProfileComponent implements OnInit {
   private subscribeRouter() {
     this.router.paramMap.subscribe(params => {
       this.schoolId = params.get('id');
-
       if (this.schoolId) {
         this.loadSchoolProfile(this.schoolId);
       }
+    });
+  }
+
+  private subcribeQueryParams() {
+    this.router.queryParamMap.subscribe(params => {
+      this.filter = + params.get('filter');
+
+      this.loadSchoolRatings(this.schoolId, this.filter);
     });
   }
 
@@ -44,11 +53,9 @@ export class ProfileComponent implements OnInit {
     this.schoolService.getSchool(schoolId).subscribe(
       data => {
         this.schoolModel = data;
-        console.log(data);
         // Load depend
         this.loadSchoolPrograms(schoolId);
         this.loadSchoolMajors(schoolId);
-        this.loadSchoolRatings(schoolId);
       },
       error => {
         console.log(error);
@@ -60,7 +67,6 @@ export class ProfileComponent implements OnInit {
     this.schoolService.getSchoolPrograms(schoolId).subscribe(
       data => {
         this.schoolModel.programs = data;
-        console.log(data);
       },
       error => {
         console.log(error);
@@ -72,7 +78,6 @@ export class ProfileComponent implements OnInit {
     this.schoolService.getSchoolMajors(schoolId).subscribe(
       data => {
         this.schoolModel.majors = data;
-        console.log(data);
       },
       error => {
         console.log(error);
@@ -80,8 +85,8 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  private loadSchoolRatings(schoolId: string) {
-    this.ratingService.getRatings(schoolId).subscribe(
+  private loadSchoolRatings(schoolId: string, ratingType: number) {
+    this.ratingService.queryRatings(schoolId, ratingType).subscribe(
       data => {
         this.schoolModel.ratings = data;
         console.log(data);
@@ -90,5 +95,9 @@ export class ProfileComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  public onRated(value: boolean): void {
+    this.loadSchoolRatings(this.schoolId, this.filter);
   }
 }

@@ -2,7 +2,7 @@
     <div class="d-flex w-100 justify-content-between">
         <h6 class="mb-2" *ngIf="rating.user">{{rating.user.firstName}}</h6>
         <ngb-rating class="rating" [(rate)]="rating.value" [readonly]="true" max="5"></ngb-rating>
-        <small>3 days ago</small>
+        <small>{{rating.createdDate | timeAgo}}</small>
     </div>
     <p class="mb-1">{{rating.comment}}</p>
 </a>

@@ -36,6 +36,7 @@ export class SearchComponent implements OnInit {
     this.schoolService.getSchools().subscribe(
       data => {
         this.schools = data;
+        console.log(data);
       },
       error => {
         console.log(error);
@@ -44,7 +45,7 @@ export class SearchComponent implements OnInit {
   }
 
   directSchoolProfie(schoolId: string) {
-    this.router.navigate([`/schools/${schoolId}`]);
+    this.router.navigate([`/schools/${schoolId}`], { queryParams: { filter: 0 } });
   }
 
 }
