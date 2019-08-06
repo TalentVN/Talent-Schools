@@ -19,6 +19,6 @@ export class SchoolsAdminComponent implements OnInit {
 
   getSchools(): void {
     this.schoolService.getSchools()
-      .subscribe(schools => this.schools == schools);
+      .subscribe(schools => this.schools = schools);
   }
 }
