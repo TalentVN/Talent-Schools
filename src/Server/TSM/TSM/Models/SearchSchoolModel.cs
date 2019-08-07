@@ -8,12 +8,20 @@ namespace TSM.Models
 {
     public class SearchSchoolModel
     {
-        public SchoolType SchoolType { get; set; }
+        public SchoolType SelectedSchoolType { get; set; }
 
-        public Guid EducationProgramId { get; set; }
+        public Specialty SelectedSpecialty { get; set; }
+
+        public Guid SelectedProgram { get; set; }
+
+        public Guid SelectedCity { get; set; }
 
         public long TuiTion { get; set; }
 
-        public Specialty Specialty { get; set; }
+        public int MaxScore { get; set; }
+
+        public int MinScore { get; set; }
+
+        public RatingType RatingType { get; set; }
     }
 }

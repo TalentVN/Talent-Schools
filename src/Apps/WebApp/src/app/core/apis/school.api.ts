@@ -14,4 +14,8 @@ export class SchoolApi {
     public static getSchoolProgarmApi(schoolId: string) {
         return `api/v1/Schools/${schoolId}/programs`;
     }
+
+    public static searchSchoolsApi() {
+        return `api/v1/Schools/Search`;
+    }
 }

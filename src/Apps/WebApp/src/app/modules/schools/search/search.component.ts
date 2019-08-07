@@ -8,6 +8,7 @@ import { SchoolModel } from '../../../shared/models/School.model';
 import { ProgramModel } from '../../../shared/models/Program.model';
 import { SchoolTypeOption } from '../../../shared/options/school-type.option';
 import { SpecialtyOption } from '../../../shared/options/specialty.option';
+import { SearchModel } from '../../../shared/models/Searching.model';
 
 @Component({
   selector: 'app-search',
@@ -16,18 +17,11 @@ import { SpecialtyOption } from '../../../shared/options/specialty.option';
 })
 export class SearchComponent implements OnInit {
 
-  schools: SchoolModel[];
-  maxScore: number;
-  minScore: number;
-
+  public schools: SchoolModel[];
   public cities: any[];
   public programs: ProgramModel[];
 
-  public selectedSchoolType: any;
-  public selectedSpecialty: any;
-  public selectedProgram: any;
-  public selectedCity: any;
-  public tution: number;
+  public searchModel = new SearchModel();
 
   public schoolTypeOption: Array<{ value: number, text: string }>;
   public specialtyOption: Array<{ value: number, text: string }>;
@@ -39,19 +33,23 @@ export class SearchComponent implements OnInit {
     private locationService: LocationService,
     private educationProgramService: EducationProgramService
   ) {
-    this.activatedRoute.queryParams.subscribe(p => console.log(p));
+    this.activatedRoute.queryParams.subscribe(
+      p => {
+        this.searchModel.ratingType = +p.filter;
+      }
+    );
   }
 
   ngOnInit() {
-    this.tution = 0;
-    this.maxScore = 30;
-    this.minScore = 0;
+    this.searchModel.tution = 0;
+    this.searchModel.maxScore = 30;
+    this.searchModel.minScore = 0;
 
     this.schoolTypeOption = SchoolTypeOption;
-    this.selectedSchoolType = SchoolTypeOption[0].value;
+    this.searchModel.selectedSchoolType = SchoolTypeOption[0].value;
 
     this.specialtyOption = SpecialtyOption;
-    this.selectedSpecialty = SpecialtyOption[0].value;
+    this.searchModel.selectedSpecialty = SpecialtyOption[0].value;
 
     // Init
     this.loadCities();
@@ -62,7 +60,8 @@ export class SearchComponent implements OnInit {
   }
 
   searchSchool(): void {
-    this.schoolService.getSchools().subscribe(
+    console.log(this.searchModel);
+    this.schoolService.searchSchools(this.searchModel).subscribe(
       data => {
         this.schools = data;
         console.log(data);
@@ -85,7 +84,6 @@ export class SearchComponent implements OnInit {
     this.locationService.getCities().subscribe(
       data => {
         this.cities = data;
-        this.selectedCity = null;
       },
       error => {
         console.log(error);
@@ -97,7 +95,7 @@ export class SearchComponent implements OnInit {
     this.educationProgramService.getPorgrams().subscribe(
       data => {
         this.programs = data;
-        this.selectedProgram = this.programs[1].id;
+        this.searchModel.selectedProgram = this.programs[1].id;
       },
       error => {
         console.log(error);

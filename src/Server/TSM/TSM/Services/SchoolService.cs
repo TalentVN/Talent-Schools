@@ -8,6 +8,7 @@ using TSM.Data.Application;
 using TSM.Data.Entities;
 using TSM.Interfaces;
 using TSM.Logging;
+using TSM.Models;
 using TSM.Models.RequestModels;
 using TSM.Models.ResponseModels;
 
@@ -38,7 +39,43 @@ namespace TSM.Services
 
             var result = _mapper.Map<IEnumerable<SchoolResponseModel>>(schools).ToArray();
 
-            for(int i = 0; i < schools.Count(); i++)
+            for (int i = 0; i < schools.Count(); i++)
+            {
+                result[i].RatingCount = schools[i].Ratings.Count();
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<SchoolResponseModel>> SearchSchools(SearchSchoolModel searchModel)
+        {
+            var andQuery = _context.Schools
+                                        .Include(x => x.Location)
+                                            .ThenInclude(l => l.Country)
+                                        .Include(x => x.Location)
+                                            .ThenInclude(l => l.City)
+                                        .Include(x => x.Ratings)
+                                        .Where(x => x.SchoolType.Equals(searchModel.SelectedSchoolType)
+                                                    //x.Specialty.Equals(searchModel.SelectedSpecialty) &&
+                                                    //x.TuiTion <= searchModel.TuiTion  &&
+                                                    //x.Location.CityId.Equals(searchModel.SelectedCity)
+                                                    );
+            if (searchModel.SelectedProgram != Guid.Empty)
+            {
+                andQuery = andQuery.Where(x => x.SchoolEducationPrograms.Any(se => se.EducationProgramId.Equals(searchModel.SelectedProgram)));
+            }
+
+            if (searchModel.SelectedCity != Guid.Empty)
+            {
+                andQuery = andQuery.Where(x => x.Location.CityId.Equals(searchModel.SelectedCity));
+            }
+
+
+            var schools = await andQuery.ToArrayAsync();
+
+            var result = _mapper.Map<IEnumerable<SchoolResponseModel>>(schools).ToArray();
+
+            for (int i = 0; i < schools.Count(); i++)
             {
                 result[i].RatingCount = schools[i].Ratings.Count();
             }
