@@ -19,6 +19,7 @@ export class EditSchoolComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.school = new SchoolModel();
     this.getSchool();
   }
 
@@ -26,7 +27,7 @@ export class EditSchoolComponent implements OnInit {
     this.router.paramMap.subscribe(params => {
       this.schoolId = params.get('id');
 
-      if(this.schoolId) {
+      if (this.schoolId) {
         this.schoolService.getSchool(this.schoolId)
           .subscribe(school => this.school = school);
       }

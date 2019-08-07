@@ -1,14 +1,68 @@
-<h1 class="header-content" *ngIf="school; else create">Update school</h1>
-<ng-template #create>Create school</ng-template>
+<h1 class="header-content" *ngIf="school.id">Update school</h1>
+<h1 class="header-content" *ngIf="!school.id">Create school</h1>
 <form>
   <div class="row">
     <div class="form-group col">
       <label>Name:</label>
-      <input class="form-control" [(ngModel)]="school.name" name="name" placeholder="name">
+      <input class="form-control" [(ngModel)]="school.name" name="name">
     </div>
     <div class="form-group col">
-      <label>Name:</label>
-      <input class="form-control" [(ngModel)]="school.name" name="name" placeholder="name">
+      <label>Code:</label>
+      <input class="form-control" [(ngModel)]="school.code" name="code">
     </div>
+  </div>
+  <div class="row">
+    <div class="form-group col">
+      <label>School Type:</label>
+      <input class="form-control" [(ngModel)]="school.Type" name="type">
+    </div>
+    <div class="form-group col">
+      <label>Tuition:</label>
+      <input class="form-control" [(ngModel)]="school.tuiTion" name="tuition" type="number">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col">
+      <label>Majors:</label>
+      <input class="form-control" [(ngModel)]="school.majors" name="majors">
+    </div>
+    <div class="form-group col">
+      <label>Programs:</label>
+      <input class="form-control" [(ngModel)]="school.programs" name="programs" type="number">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col">
+      <label>Majors:</label>
+      <input class="form-control" [(ngModel)]="school.majors" name="majors">
+    </div>
+    <div class="form-group col">
+      <label>Programs:</label>
+      <input class="form-control" [(ngModel)]="school.programs" name="programs">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col">
+      <label>Coutry:</label>
+      <input class="form-control" [(ngModel)]="school.location" name="majors">
+    </div>
+    <div class="form-group col">
+      <label>Address:</label>
+      <input class="form-control" [(ngModel)]="school.location" name="programs">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col">
+      <label>website:</label>
+      <input class="form-control" [(ngModel)]="school.website" name="majors">
+    </div>
+    <div class="form-group col">
+      <label>CoverUrl:</label>
+      <input class="form-control" [(ngModel)]="school.coverUrl" name="programs">
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Description:</label>
+    <textarea class="form-control" rows="5" [(ngModel)]="school.description" name="description"></textarea>
   </div>
 </form>
