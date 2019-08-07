@@ -24,6 +24,8 @@ namespace TSM.Models.ResponseModels
 
         public string Description { get; set; }
 
+        public long RatingCount { get; set; }
+
         public SchoolType SchoolType { get; set; }
 
         public LocationResponseModel Location { get; set; }

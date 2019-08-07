@@ -14,6 +14,7 @@ export class SchoolModel {
     description: string;
     schoolType: number;
     location: LocationModel;
+    ratingCount: number;
     majors: MajorModel[];
     programs: ProgramModel[];
     ratings: CreateRatingModel[];

@@ -7,4 +7,4 @@
     <p class="mb-1">{{rating.comment}}</p>
 </a>
 
-<a href="#" class="float-right badge badge-info">Xem thêm</a>
+<a href="#" *ngIf="ratings && ratings.length > 0" class="float-right badge badge-info">Xem thêm</a>

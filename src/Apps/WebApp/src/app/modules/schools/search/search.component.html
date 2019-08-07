@@ -17,80 +17,65 @@
                 <div class="card-body">
                     <a class="text-secondary">SCHOOL TYPE</a>
                     <ul class="list-group">
-                        <li class="list-group-item">
+                        <li class="list-group-item" *ngFor="let item of schoolTypeOption">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" checked>
+                                <input class="form-check-input" (change)="modelChanged()" (click)="selectedSchoolType=item.value" type="radio" name="schooltype" [checked]="selectedSchoolType===item.value">
                                 <label class="form-check-label">
-                                    Công lập
-                                </label>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios">
-                                <label class="form-check-label">
-                                    Tư thục
+                                    {{item.text}}
                                 </label>
                             </div>
                         </li>
                     </ul>
-                    <hr> <a class="text-secondary">ACADEMICS</a>
+
+                    <hr> <a class="text-secondary">CHƯƠNG TRÌNH ĐÀO TẠO </a>
                     <ul class="list-group">
-                        <li class="list-group-item">
+                        <li class="list-group-item" *ngFor="let item of programs">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios1">
+                                <input (change)="modelChanged()" (click)="selectedProgram=item.id" class="form-check-input" type="radio" name="program" [checked]="selectedProgram===item.id">
                                 <label class="form-check-label">
-                                    Đại học
-                                </label>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios1" checked>
-                                <label class="form-check-label">
-                                    Cao đẳng
+                                    {{item.name}}
                                 </label>
                             </div>
                         </li>
                     </ul>
+
+                    <hr> <a class="text-secondary">LĨNH VỰC</a>
+                    <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let item of specialtyOption">
+                            <div class="form-check">
+                                <input class="form-check-input" (change)="modelChanged()" (click)="selectedSpecialty=item.value" type="radio" name="specialty" [checked]="selectedSpecialty===item.value">
+                                <label class="form-check-label">
+                                    {{item.text}}
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <hr> <a class="text-secondary">VỊ TRÍ</a>
+
+                    <div class="form-group">
+                        <select (change)="modelChanged()" [(ngModel)]="selectedCity" class="form-control" id="exampleFormControlSelect1">
+                                  <option value="null">Tất cả</option>
+                                  <option *ngFor="let item of cities" [value]="item.id">{{item.name}}</option>
+                                </select>
+                    </div>
 
                     <hr> <a class="text-secondary">HỌC PHÍ TRUNG BÌNH (1 năm)</a>
                     <div class="input-group mb-3">
-                        <input type="number" class="form-control mr-3" [(ngModel)]="sliderValue" min="1" max="100000">
+                        <input (change)="modelChanged()" type="number" class="form-control mr-3" [(ngModel)]="tution" min="0" max="20000000">
                         <div class="input-group-append">
-                            <span class="input-group-text">USD</span>
+                            <span class="input-group-text">VND</span>
                         </div>
                     </div>
-                    <input type="range" class="form-control" [(ngModel)]="sliderValue" min="1" max="100000">
+                    <input type="range" class="form-control" [(ngModel)]="tution" min="0" max="200000000">
 
                     <hr> <a class="text-secondary">ĐIỂM TRÚNG TUYỂN</a>
                     <div class="input-group mb-3">
-                        <input type="number" class="form-control mr-3" [(ngModel)]="minScore" min="0" max="29">
+                        <input (change)="modelChanged()" type="number" class="form-control mr-3" [(ngModel)]="minScore" min="0" max="29">
                         <p>_</p>
                         <input type="number" class="form-control ml-3" [(ngModel)]="maxScore" min="1" max="30">
                     </div>
 
-                    <hr> <a class="text-secondary">LĨNH VỰC</a>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label">Kĩ thuật</label>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label">Kinh tế</label>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label">Tổng hợp</label>
-                            </div>
-                        </li>
-                    </ul>
                     <hr> <a class="text-secondary">TAGS</a>
                     <ul class="nav">
                         <li class="nav-item">
@@ -117,24 +102,28 @@
                 <!-- Start Header query options -->
                 <ul class="nav nav-tabs mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best School</a>
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: '0'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best School</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular1'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best Techer</a>
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: '1'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best Techer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular2'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best WorkPlace</a>
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: '2'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best WorkPlace</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular3'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best Education</a>
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: '3'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best Education</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular4'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best Largest</a>
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: '4'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Best Largest</a>
                     </li>
                 </ul>
                 <!-- End Header query options -->
-                <div class="form-inline my-2 my-lg-0">
-                    <a *ngIf="schools" class="text-right text-sm text-muted">Kết quả: {{schools.length}}</a>
+                <div class="form-inline my-lg-2">
+                    <a *ngIf="schools" class="text-right text-sm text-muted">Top:                         
+                        <select class="form-control">
+                            <option>20</option>
+                        </select>
+                    </a>
                 </div>
 
             </div>
@@ -148,9 +137,8 @@
                             <a [routerLink]="[]" (click)="directSchoolProfie(school.id)" class="text-dark">{{school.name}} </a>({{school.code}})
                         </h6>
                         <p class="card-subtitle text-secondary mb-2">
-                            <a href="#" class="text-link text-secondary">University</a> -
-                            <a href="#" class="text-link text-secondary">{{school.location.address}}</a> -
-                            <a href="#" class="text-link text-warning">200 Review</a>
+                            <a [href]="'https://www.google.com/maps/place/'+ school.location.address" class="text-link text-secondary">{{school.location.address}}</a> -
+                            <a href="#" class="text-link text-warning">{{school.ratingCount}} Đánh giá</a>
                         </p>
                         <p class="card-text">{{school.description}}</p>
                         <a [routerLink]="[]" (click)="directSchoolProfie(school.id)" class="float-right badge badge-info">Xem thêm</a>

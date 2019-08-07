@@ -33,9 +33,17 @@ namespace TSM.Services
                                             .ThenInclude(l => l.Country)
                                         .Include(x => x.Location)
                                             .ThenInclude(l => l.City)
-                                        .ToListAsync();
+                                        .Include(x => x.Ratings)
+                                        .ToArrayAsync();
 
-            return _mapper.Map<IEnumerable<SchoolResponseModel>>(schools);
+            var result = _mapper.Map<IEnumerable<SchoolResponseModel>>(schools).ToArray();
+
+            for(int i = 0; i < schools.Count(); i++)
+            {
+                result[i].RatingCount = schools[i].Ratings.Count();
+            }
+
+            return result;
         }
 
         public async Task<SchoolResponseModel> GetSchool(Guid id)

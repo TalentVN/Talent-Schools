@@ -70,6 +70,7 @@ namespace TSM
 
             services.AddScoped<IMajorService, MajorService>();
             services.AddScoped<IRatingService, RatingService>();
+            services.AddScoped<ILocationService, LocationService>();
 
             // Settings
             services.Configure<EmailSetting>(options => Configuration.GetSection("EmailSetting").Bind(options));
