@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { SchoolApi } from '../apis/school.api';
@@ -14,6 +14,10 @@ import { SearchModel } from '../../shared/models/Searching.model';
   providedIn: 'root'
 })
 export class SchoolService {
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(
     private httpClient: HttpClient
@@ -41,6 +45,10 @@ export class SchoolService {
 
   public getSchoolPrograms(schoolId: string): Observable<MajorModel[]> {
     return this.httpClient.get<ProgramModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolProgarmApi(schoolId)}`);
+  }
+
+  public deleteSchool(schoolId: string): Observable<SchoolModel> {
+    return this.httpClient.delete<SchoolModel>(`${environment.coreApi}/${SchoolApi.deleteSchool(schoolId)}`, this.httpOptions);
   }
 }
 

@@ -18,7 +18,18 @@ export class SchoolsAdminComponent implements OnInit {
   }
 
   getSchools(): void {
-    this.schoolService.getSchools()
-      .subscribe(schools => this.schools = schools);
+    this.schoolService.getSchools().subscribe(
+      schools => this.schools = schools,
+      error => console.log(error)
+    );
+  }
+
+  deleteSchool(id: string): void {
+    if (confirm("Are you sure to delete this school?")) {
+      this.schoolService.deleteSchool(id).subscribe(
+        school => console.log(school),
+        error => console.log(error)
+      );
+    }
   }
 }

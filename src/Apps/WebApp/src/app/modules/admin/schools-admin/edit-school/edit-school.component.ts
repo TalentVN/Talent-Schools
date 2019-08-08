@@ -10,7 +10,6 @@ import { SchoolService } from 'src/app/core/services/school.service';
 })
 export class EditSchoolComponent implements OnInit {
 
-  private schoolId: string;
   school: SchoolModel;
 
   constructor(
@@ -23,14 +22,34 @@ export class EditSchoolComponent implements OnInit {
     this.getSchool();
   }
 
-  getSchool(): void {
+  private getSchool(): void {
     this.router.paramMap.subscribe(params => {
-      this.schoolId = params.get('id');
+      var schoolId = params.get('id');
 
-      if (this.schoolId) {
-        this.schoolService.getSchool(this.schoolId)
-          .subscribe(school => this.school = school);
+      if (schoolId) {
+        this.schoolService.getSchool(schoolId).subscribe(
+          school => {
+            this.school = school;
+            // Load depend
+            this.loadSchoolPrograms(schoolId);
+            this.loadSchoolMajors(schoolId);
+          },
+          error => console.log(error));
       }
     });
+  }
+
+  private loadSchoolPrograms(schoolId: string) {
+    this.schoolService.getSchoolPrograms(schoolId).subscribe(
+      programs => this.school.programs = programs,
+      error => console.log(error)
+    );
+  }
+
+  private loadSchoolMajors(schoolId: string) {
+    this.schoolService.getSchoolMajors(schoolId).subscribe(
+      majors => this.school.majors = majors,
+      error => console.log(error)
+    );
   }
 }
