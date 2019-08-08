@@ -1,7 +1,7 @@
 <!-- Start Cover -->
 <div *ngIf="schoolModel" class="card container mb-lg-5">
     <div class="row">
-        <img src="http://covermyfb.com/media/covers/fBGeYvzQ4H5Yu1JI.jpg" height="100%" width="100%">
+        <img [src]="schoolModel.coverUrl" height="100%" width="100%">
     </div>
     <div class="card-body">
         <div class="row">
@@ -117,9 +117,9 @@
                     Điểm trúng tuyển
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
+                    <!-- <h5 class="card-title">Special title treatment</h5>
                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="#" class="btn btn-primary">Go somewhere</a> -->
                 </div>
             </div>
             <div class="card mb-5">
@@ -127,9 +127,9 @@
                     Thông tin tuyển sinh
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
+                    <!-- <h5 class="card-title">Special title treatment</h5>
                     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="#" class="btn btn-primary">Go somewhere</a> -->
                 </div>
             </div>
         </div>
@@ -145,51 +145,31 @@
                 <!-- Start Header query options -->
                 <ul class="nav nav-tabs mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Trường học</a>
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 0}" queryParamsHandling="merge" [routerLinkActive]="['active']">Trường học</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular1'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Giáo viên</a>
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 1}" queryParamsHandling="merge" [routerLinkActive]="['active']">Giáo viên</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular2'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Môi trường</a>
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 2}" queryParamsHandling="merge" [routerLinkActive]="['active']">Môi trường</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 'popular3'}" queryParamsHandling="merge" [routerLinkActive]="['active']">Chất lượng đào tạo</a>
+                        <a class="nav-link" [routerLink]="[]" [queryParams]="{ filter: 3}" queryParamsHandling="merge" [routerLinkActive]="['active']">Chất lượng đào tạo</a>
                     </li>
                 </ul>
                 <!-- End Header query options -->
-                <div class="form-inline my-2 my-lg-0">
-                    <a class="text-right">Đánh giá</a>
+                <div class="form-inline my-2 my-lg-0" *ngIf="schoolModel.ratings">
+                    <a class="text-right">{{schoolModel.ratings.length}} Đánh giá</a>
                 </div>
 
             </div>
         </div>
         <div class="card-body">
             <div class="list-group" *ngIf="schoolModel.ratings">
-                <a class="list-group-item" *ngFor="let rating of schoolModel.ratings">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h6 class="mb-1">Văn Nhật</h6>
-                        <ngb-rating value="3" max="5"></ngb-rating>
-                        <small>3 days ago</small>
-                    </div>
-                    <p class="mb-1">{{rating.comment}}</p>
-                </a>
+                <app-rating-list [ratings]="schoolModel.ratings"></app-rating-list>
             </div>
 
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
-                        <ngb-rating max="5"></ngb-rating>
-                        <div class="input-group">
-                            <div class="input-group-prepend mr-5">
-                                <span class="input-group-text">Bình luận</span>
-                            </div>
-                            <textarea class="form-control mr-3" aria-label="With textarea"></textarea>
-                            <button class="btn btn btn-outline-success">Gửi</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <app-rating-form (rated)="onRated($event)" [schoolId]="schoolId"></app-rating-form>
         </div>
     </div>
 </div>

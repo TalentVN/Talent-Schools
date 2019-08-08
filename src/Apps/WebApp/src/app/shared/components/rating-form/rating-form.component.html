@@ -1,0 +1,39 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="ratingForm" (ngSubmit)="submitRating()">
+            <div class="form-group">
+                <div class="row">
+                    <ngb-rating style="font-size: 2rem;" formControlName="value" max="5"></ngb-rating>
+                    <span *ngIf="f.value.value === 5">Excellent</span>
+                    <span *ngIf="f.value.value === 4">Good</span>
+                    <span *ngIf="f.value.value === 3">Average</span>
+                    <span *ngIf="f.value.value === 2">Bad</span>
+                    <span *ngIf="f.value.value === 1">So Bad</span>
+                </div>
+                <div class="form-text small">
+                    <div *ngIf="f.value.valid" class="text-success">Cảm ơn!</div>
+                    <div *ngIf="f.value.invalid" class="text-danger">Hãy chọn</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend mr-5">
+                        <span class="input-group-text">Bình luận</span>
+                    </div>
+                    <textarea formControlName="comment" class="form-control mr-3" aria-label="With textarea"></textarea>
+                    <div *ngIf="f.comment.errors" class="invalid-feedback">
+                        <div *ngIf="f.comment.errors.required">Bạn chưa nhập bình luận</div>
+                    </div>
+                    <button [disabled]="f.comment.invalid || f.value.invalid"
+                        class="btn btn btn-outline-success">Gửi</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- <ng-template #t let-fill="fill">
+    <span class="star" [class.full]="fill === 100">
+          <span class="half" [style.width.%]="fill"></span><i class="far fa-star"></i>
+    </span>
+</ng-template> -->

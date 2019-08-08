@@ -1,7 +1,7 @@
 import { LocationModel } from './Location.model';
 import { MajorModel } from './Major.model';
 import { ProgramModel } from './Program.model';
-import { RatingModel } from './Rating.model';
+import { CreateRatingModel } from './CreateRating.model';
 
 export class SchoolModel {
     id: string;
@@ -14,7 +14,8 @@ export class SchoolModel {
     description: string;
     schoolType: number;
     location: LocationModel;
+    ratingCount: number;
     majors: MajorModel[];
     programs: ProgramModel[];
-    ratings: RatingModel[];
+    ratings: CreateRatingModel[];
 }

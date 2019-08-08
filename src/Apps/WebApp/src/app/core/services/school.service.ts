@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { SchoolApi } from '../apis/school.api';
 import { environment } from '../../../environments/environment';
 
 import { SchoolModel } from '../../shared/models/School.model';
 import { MajorModel } from '../../shared/models/Major.model';
-import { Observable } from 'rxjs';
 import { ProgramModel } from 'src/app/shared/models/Program.model';
+import { SearchModel } from '../../shared/models/Searching.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,11 @@ export class SchoolService {
   }
 
   public createSchool(school: SchoolModel): Observable<SchoolModel> {
-    return this.httpClient.post<SchoolModel>(`${environment.coreApi}/${SchoolApi.getSchoolsApi}`, school);
+    return this.httpClient.post<SchoolModel>(`${environment.coreApi}/${SchoolApi.getSchoolsApi()}`, school);
+  }
+
+  public searchSchools(searchModel: SearchModel): Observable<SchoolModel[]> {
+    return this.httpClient.post<SchoolModel[]>(`${environment.coreApi}/${SchoolApi.searchSchoolsApi()}`, searchModel);
   }
 
   public getSchoolMajors(schoolId: string): Observable<MajorModel[]> {

@@ -22,7 +22,7 @@ import { RegisterComponent } from './shared/components/register/register.compone
     FooterComponent,
     LeftMenuComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

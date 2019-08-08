@@ -19,6 +19,54 @@ namespace TSM.Data.Application.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("TSM.Data.Entities.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("ConcurrencyStamp");
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("JwtRole");
+
+                    b.Property<string>("JwtToken");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail");
+
+                    b.Property<string>("NormalizedUserName");
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApplicationUser");
+                });
+
             modelBuilder.Entity("TSM.Data.Entities.City", b =>
                 {
                     b.Property<Guid>("Id")
@@ -155,7 +203,8 @@ namespace TSM.Data.Application.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<decimal>("Value");
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Year");
 
@@ -179,7 +228,8 @@ namespace TSM.Data.Application.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<decimal>("Value");
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Year");
 
@@ -209,11 +259,17 @@ namespace TSM.Data.Application.Migrations
 
                     b.Property<Guid>("SchoolId");
 
+                    b.Property<Guid>("UserId");
+
+                    b.Property<string>("UserId1");
+
                     b.Property<int>("Value");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SchoolId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Ratings");
                 });
@@ -325,6 +381,10 @@ namespace TSM.Data.Application.Migrations
                         .WithMany("Ratings")
                         .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TSM.Data.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("TSM.Data.Entities.SchoolEducationProgram", b =>

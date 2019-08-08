@@ -21,7 +21,7 @@ namespace TSM.Controllers
     {
         private readonly IAppLogger<SchoolsController> _logger;
         private readonly ISchoolService _schoolService;
-        private readonly ISchoolEducationProgramService  _schoolEducationProgramService;
+        private readonly ISchoolEducationProgramService _schoolEducationProgramService;
         private readonly ISchoolMajorService _schoolMajorService;
 
         public SchoolsController(
@@ -42,9 +42,10 @@ namespace TSM.Controllers
         /// <param name="searchString"></param>
         /// <returns></returns>
         [HttpPost("Search")]
-        public async Task<ActionResult<IEnumerable<SchoolResponseModel>>> SearchSchool(string searchString)
+        public async Task<ActionResult<IEnumerable<SchoolResponseModel>>> SearchSchool(SearchSchoolModel searchModel)
         {
-            return Ok();
+            var chools = await _schoolService.SearchSchools(searchModel);
+            return Ok(chools);
         }
 
 

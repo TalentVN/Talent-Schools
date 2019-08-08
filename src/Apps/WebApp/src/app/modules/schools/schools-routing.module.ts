@@ -3,19 +3,26 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { SchoolsComponent } from './schools.component';
 import { SearchComponent } from './search/search.component';
+import { RanksComponent } from './ranks/ranks.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: SchoolsComponent
-  },
-  {
-    path: 'search',
-    component: SearchComponent
-  },
-  {
-    path: ':id',
-    component: ProfileComponent
+    component: SchoolsComponent,
+    children: [
+      {
+        path: 'search',
+        component: SearchComponent
+      },
+      {
+        path: 'ranks',
+        component: RanksComponent
+      },
+      {
+        path: ':id',
+        component: ProfileComponent
+      }
+    ]
   }
 ];
 
