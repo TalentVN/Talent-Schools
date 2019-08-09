@@ -24,32 +24,15 @@ export class EditSchoolComponent implements OnInit {
 
   private getSchool(): void {
     this.router.paramMap.subscribe(params => {
-      var schoolId = params.get('id');
+      const schoolId = params.get('id');
 
       if (schoolId) {
         this.schoolService.getSchool(schoolId).subscribe(
           school => {
             this.school = school;
-            // Load depend
-            this.loadSchoolPrograms(schoolId);
-            this.loadSchoolMajors(schoolId);
           },
           error => console.log(error));
       }
     });
-  }
-
-  private loadSchoolPrograms(schoolId: string) {
-    this.schoolService.getSchoolPrograms(schoolId).subscribe(
-      programs => this.school.programs = programs,
-      error => console.log(error)
-    );
-  }
-
-  private loadSchoolMajors(schoolId: string) {
-    this.schoolService.getSchoolMajors(schoolId).subscribe(
-      majors => this.school.majors = majors,
-      error => console.log(error)
-    );
   }
 }

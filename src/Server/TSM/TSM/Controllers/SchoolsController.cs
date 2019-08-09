@@ -91,6 +91,14 @@ namespace TSM.Controllers
             return Ok(school);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<SchoolResponseModel>> DeleteSchool(Guid id)
+        {
+            await _schoolService.DeleteSchool(id);
+
+            return Ok();
+        }
+
         [HttpGet("{id}/majors")]
         public async Task<ActionResult<IEnumerable<MajorModel>>> GetSchoolMajors(Guid id)
         {

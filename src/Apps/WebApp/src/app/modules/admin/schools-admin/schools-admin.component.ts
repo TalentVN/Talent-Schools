@@ -27,7 +27,7 @@ export class SchoolsAdminComponent implements OnInit {
   deleteSchool(id: string): void {
     if (confirm("Are you sure to delete this school?")) {
       this.schoolService.deleteSchool(id).subscribe(
-        school => console.log(school),
+        () => this.schools = this.schools.filter(s => s.id !== id),
         error => console.log(error)
       );
     }
