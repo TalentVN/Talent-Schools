@@ -43,6 +43,10 @@ export class SchoolService {
     return this.httpClient.get<ProgramModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolProgarmApi(schoolId)}`);
   }
 
+  public updateSchool(school: SchoolModel): Observable<SchoolModel> {
+    return this.httpClient.put<SchoolModel>(`${environment.coreApi}/${SchoolApi.getSchoolsApi()}`, school);
+  }
+
   public deleteSchool(schoolId: string): Observable<SchoolModel> {
     return this.httpClient.delete<SchoolModel>(`${environment.coreApi}/${SchoolApi.getSchoolApi(schoolId)}`);
   }

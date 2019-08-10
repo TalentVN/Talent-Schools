@@ -28,5 +28,10 @@ namespace TSM.Services
         {
             return await _context.Cities.ToListAsync();
         }
+
+        public async Task<IEnumerable<Country>> GetCountries()
+        {
+            return await _context.Countries.ToListAsync();
+        }
     }
 }

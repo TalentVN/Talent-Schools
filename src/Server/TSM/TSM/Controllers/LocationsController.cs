@@ -28,5 +28,12 @@ namespace TSM.Controllers
             var cities = await _locationService.GetCities();
             return Ok(cities);
         }
+
+        [HttpGet("Countries")]
+        public async Task<ActionResult<IEnumerable<Country>>> GetCountries()
+        {
+            var countries = await _locationService.GetCountries();
+            return Ok(countries);
+        }
     }
 }

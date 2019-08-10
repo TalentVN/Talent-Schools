@@ -1,6 +1,6 @@
 <h1>Schools</h1>
-<div class="top-left">
-  <button [routerLink]="['create']">Create</button>
+<div class="float-right">
+  <button class="btn active" [routerLink]="['create']">Create</button>
 </div>
 <table class="table">
   <thead>
@@ -23,7 +23,7 @@
       <td>{{school.website}}</td>
       <td>{{school.tuiTion}}</td>
       <td>
-        <a [routerLink]="[school.id]">Edit</a> |
+        <a [routerLink]="['edit', school.id]">Edit</a> |
         <a [routerLink]="" (click)="deleteSchool(school.id)">Delete</a>
       </td>
     </tr>

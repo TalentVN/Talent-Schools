@@ -9,6 +9,7 @@ import { ProgramModel } from '../../../shared/models/Program.model';
 import { SchoolTypeOption } from '../../../shared/options/school-type.option';
 import { SpecialtyOption } from '../../../shared/options/specialty.option';
 import { SearchModel } from '../../../shared/models/Searching.model';
+import { CityModel } from 'src/app/shared/models/City.model';
 
 @Component({
   selector: 'app-search',
@@ -18,7 +19,7 @@ import { SearchModel } from '../../../shared/models/Searching.model';
 export class SearchComponent implements OnInit {
 
   public schools: SchoolModel[];
-  public cities: any[];
+  public cities: CityModel[];
   public programs: ProgramModel[];
 
   public searchModel = new SearchModel();

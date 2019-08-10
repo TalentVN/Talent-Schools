@@ -14,21 +14,15 @@
   <div class="row">
     <div class="form-group col">
       <label>School Type:</label>
-      <input class="form-control" [(ngModel)]="school.schoolType" name="type">
+      <select class="form-control" [(ngModel)]="school.schoolType" name="schoolType">
+        <option *ngFor="let type of schoolTypes" [value]="type.value">
+          {{type.text}}
+        </option>
+      </select>
     </div>
     <div class="form-group col">
       <label>Tuition:</label>
       <input class="form-control" [(ngModel)]="school.tuiTion" name="tuition" type="number">
-    </div>
-  </div>
-  <div class="row">
-    <div class="form-group col">
-      <label>Coutry:</label>
-      <input class="form-control" [(ngModel)]="school.location" name="country">
-    </div>
-    <div class="form-group col">
-      <label>Address:</label>
-      <input class="form-control" [(ngModel)]="school.location" name="address">
     </div>
   </div>
   <div class="row">
@@ -41,8 +35,45 @@
       <input class="form-control" [(ngModel)]="school.coverUrl" name="coverUrl">
     </div>
   </div>
+  <div class="row">
+    <div class="form-group col">
+      <label>Coutry:</label>
+      <select class="form-control" [(ngModel)]="school.location.countryId" name="country">
+        <option *ngFor="let country of countries" [value]="country.id">
+          {{country.name}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col">
+      <label>Cities:</label>
+      <select class="form-control" [(ngModel)]="school.location.cityId" name="city">
+        <option *ngFor="let city of cities" [value]="city.id">
+          {{city.name}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col">
+      <label>District:</label>
+      <input class="form-control" [(ngModel)]="school.location.district" name="district">
+    </div>
+    <div class="form-group col">
+      <label>Ward:</label>
+      <input class="form-control" [(ngModel)]="school.location.ward" name="ward">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-sm-6">
+      <label>Street:</label>
+      <input class="form-control" [(ngModel)]="school.location.street" name="street">
+    </div>
+  </div>
   <div class="form-group">
     <label>Description:</label>
     <textarea class="form-control" rows="5" [(ngModel)]="school.description" name="description"></textarea>
+  </div>
+  <div class="float-right">
+    <button class="btn active" (click)="save()">Save</button>
   </div>
 </form>
