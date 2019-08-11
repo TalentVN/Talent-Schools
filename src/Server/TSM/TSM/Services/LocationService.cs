@@ -26,12 +26,12 @@ namespace TSM.Services
 
         public async Task<IEnumerable<City>> GetCities()
         {
-            return await _context.Cities.ToListAsync();
+            return await _context.Cities.OrderBy(x => x.Name).AsNoTracking().ToListAsync();
         }
 
         public async Task<IEnumerable<Country>> GetCountries()
         {
-            return await _context.Countries.ToListAsync();
+            return await _context.Countries.OrderBy(x => x.Name).AsNoTracking().ToListAsync();
         }
     }
 }

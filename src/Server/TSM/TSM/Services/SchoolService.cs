@@ -34,6 +34,7 @@ namespace TSM.Services
                                         .Include(x => x.Location)
                                             .ThenInclude(l => l.City)
                                         .Include(x => x.Ratings)
+                                        .OrderBy(x => x.Name)
                                         .AsNoTracking()
                                         .ToArrayAsync();
 
@@ -96,10 +97,8 @@ namespace TSM.Services
             return _mapper.Map<SchoolResponseModel>(school);
         }
 
-        public async Task<SchoolResponseModel> CreateSchool(CreateSchoolRequestModel requestModel)
+        public async Task CreateSchool(CreateSchoolRequestModel requestModel)
         {
-            Location location = await CreateLocation(requestModel.Location);
-
             School school = new School()
             {
                 Code = requestModel.Code,
@@ -108,19 +107,19 @@ namespace TSM.Services
                 Name = requestModel.Name,
                 TuiTion = requestModel.TuiTion,
                 SchoolType = requestModel.SchoolType,
-                Website = requestModel.Website,
-                Location = location
+                Website = requestModel.Website
             };
+
+            await CreateLocation(requestModel.Location, school.Id);
 
             await _context.Schools.AddAsync(school);
             await _context.SaveChangesAsync();
-
-            return _mapper.Map<SchoolResponseModel>(school);
         }
 
-        private async Task<Location> CreateLocation(LocationRequestModel requestModel)
+        private async Task<Location> CreateLocation(LocationRequestModel requestModel, Guid schoolId)
         {
             Location location = new Location(
+                schoolId,
                 requestModel.CityId,
                 requestModel.CountryId,
                 requestModel.Street,
@@ -128,16 +127,15 @@ namespace TSM.Services
                 requestModel.District);
 
             await _context.Locations.AddAsync(location);
-            await _context.SaveChangesAsync();
 
             return location;
         }
 
-        public async Task<SchoolResponseModel> UpdateSchool(UpdateSchoolRequestModel requestModel)
+        public async Task UpdateSchool(UpdateSchoolRequestModel requestModel)
         {
             var school = await _context.Schools
                                         .Include(x => x.Location)
-                                        .SingleOrDefaultAsync(x => x.Equals(requestModel.Id));
+                                        .SingleOrDefaultAsync(x => x.Id.Equals(requestModel.Id));
 
             school.Code = requestModel.Code;
             school.CoverUrl = requestModel.CoverUrl;
@@ -154,8 +152,6 @@ namespace TSM.Services
 
             _context.Schools.Update(school);
             await _context.SaveChangesAsync();
-
-            return _mapper.Map<SchoolResponseModel>(school);
         }
 
         public async Task DeleteSchool(Guid id)

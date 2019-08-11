@@ -12,8 +12,9 @@ namespace TSM.Data.Entities
 
         }
 
-        public Location(Guid cityId, Guid countryId, string street, string ward, string district)
+        public Location(Guid schoolId, Guid cityId, Guid countryId, string street, string ward, string district)
         {
+            SchoolId = schoolId;
             CityId = cityId;
             CountryId = countryId;
 

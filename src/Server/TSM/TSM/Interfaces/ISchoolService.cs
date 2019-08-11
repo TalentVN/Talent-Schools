@@ -12,8 +12,8 @@ namespace TSM.Interfaces
     {
         Task<IEnumerable<SchoolResponseModel>> GetSchools();
         Task<SchoolResponseModel> GetSchool(Guid id);
-        Task<SchoolResponseModel> CreateSchool(CreateSchoolRequestModel requestModel);
-        Task<SchoolResponseModel> UpdateSchool(UpdateSchoolRequestModel requestModel);
+        Task CreateSchool(CreateSchoolRequestModel requestModel);
+        Task UpdateSchool(UpdateSchoolRequestModel requestModel);
         Task DeleteSchool(Guid id);
         Task<IEnumerable<SchoolResponseModel>> SearchSchools(SearchSchoolModel searchModel);
     }

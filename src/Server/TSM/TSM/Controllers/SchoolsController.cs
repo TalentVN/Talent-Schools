@@ -76,19 +76,19 @@ namespace TSM.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<SchoolResponseModel>> PostSchool(CreateSchoolRequestModel requestModel)
+        public async Task<IActionResult> PostSchool(CreateSchoolRequestModel requestModel)
         {
-            var school = await _schoolService.CreateSchool(requestModel);
+            await _schoolService.CreateSchool(requestModel);
 
-            return Ok(school);
+            return Ok();
         }
 
         [HttpPut]
-        public async Task<ActionResult<SchoolResponseModel>> PutSchool(UpdateSchoolRequestModel requestModel)
+        public async Task<IActionResult> PutSchool(UpdateSchoolRequestModel requestModel)
         {
-            var school = await _schoolService.UpdateSchool(requestModel);
+            await _schoolService.UpdateSchool(requestModel);
 
-            return Ok(school);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
