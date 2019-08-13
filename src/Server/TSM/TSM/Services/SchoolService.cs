@@ -97,7 +97,7 @@ namespace TSM.Services
             return _mapper.Map<SchoolResponseModel>(school);
         }
 
-        public async Task CreateSchool(CreateSchoolRequestModel requestModel)
+        public async Task<Guid> CreateSchool(CreateSchoolRequestModel requestModel)
         {
             School school = new School()
             {
@@ -114,6 +114,8 @@ namespace TSM.Services
 
             await _context.Schools.AddAsync(school);
             await _context.SaveChangesAsync();
+
+            return school.Id;
         }
 
         private async Task<Location> CreateLocation(LocationRequestModel requestModel, Guid schoolId)

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { SchoolModel } from 'src/app/shared/models/School.model';
 import { SchoolService } from 'src/app/core/services/school.service';
@@ -17,35 +17,59 @@ import { LocationModel } from 'src/app/shared/models/Location.model';
 })
 export class EditSchoolComponent implements OnInit {
 
-  school: SchoolModel;
+  editForm: FormGroup;
+  loading = false;
+  submitted = false;
+  submitDisabled = true;
+
+  schoolId: string;
   schoolTypes = SchoolTypeOption;
   countries: CountryModel[];
   cities: CityModel[];
 
   constructor(
-    private router: ActivatedRoute,
-    private location: Location,
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
     private schoolService: SchoolService,
     private locationService: LocationService
   ) { }
 
   ngOnInit() {
-    this.school = new SchoolModel();
-    this.school.location = new LocationModel();
+    this.editForm = this.formBuilder.group({
+      id: [''],
+      name: ['', Validators.required],
+      code: ['', Validators.required],
+      schoolType: [0],
+      tuiTion: [0],
+      website: [''],
+      coverUrl: [''],
+      description: [''],
+      location: this.formBuilder.group({
+        countryId: ['', Validators.required],
+        cityId: ['', Validators.required],
+        district: [''],
+        ward: [''],
+        street: ['']
+      })
+    });
 
     this.getSchool();
     this.getCountries();
     this.getCities();
   }
 
-  private getSchool(): void {
-    this.router.paramMap.subscribe(params => {
-      const schoolId = params.get('id');
+  // convenience getter for easy access to form fields
+  get f() { return this.editForm.controls; }
 
-      if (schoolId) {
-        this.schoolService.getSchool(schoolId).subscribe(
-          school => this.school = school,
-          error => console.log(error)
+  private getSchool(): void {
+    this.route.paramMap.subscribe(params => {
+      this.schoolId = params.get('id');
+
+      if (this.schoolId) {
+        this.schoolService.getSchool(this.schoolId).subscribe(
+          school => this.editForm.patchValue(school),
+          error => console.error(error)
         );
       }
     });
@@ -53,20 +77,44 @@ export class EditSchoolComponent implements OnInit {
 
   private getCountries(): void {
     this.locationService.getCountries().subscribe(
-      countries => this.countries = countries,
-      error => console.log(error)
+      countries => {
+        this.countries = countries;
+        
+        if(!this.schoolId){
+          this.editForm.patchValue({
+            location: {
+              countryId: countries[0].id
+            }
+          });
+        }
+      },
+      error => console.error(error)
     );
   }
 
   private getCities(): void {
     this.locationService.getCities().subscribe(
-      cities => this.cities = cities,
-      error => console.log(error)
+      cities => {
+        this.cities = cities;
+        
+        if(!this.schoolId){
+          this.editForm.patchValue({
+            location: {
+              cityId: cities[0].id
+            }
+          });
+        }
+      },
+      error => console.error(error)
     );
   }
 
-  save(): void {
-    if (this.school.id) {
+  onSubmit(): void {
+    if (this.editForm.invalid) {
+      return;
+    }
+
+    if (this.schoolId) {
       this.updateSchool();
     } else {
       this.createSchool();
@@ -74,16 +122,16 @@ export class EditSchoolComponent implements OnInit {
   }
 
   private updateSchool(): void {
-    this.schoolService.updateSchool(this.school).subscribe(
-      () => this.location.back(),
-      error => console.log(error)
+    this.schoolService.updateSchool(this.editForm.value).subscribe(
+      () => this.router.navigate(['admin']),
+      error => console.error(error)
     );
   }
 
   private createSchool(): void {
-    this.schoolService.createSchool(this.school).subscribe(
-      () => this.location.back(),
-      error => console.log(error)
+    this.schoolService.createSchool(this.editForm.value).subscribe(
+      schoolId => this.router.navigate(['../edit', schoolId], { relativeTo: this.route }),
+      error => console.error(error)
     );
   }
 }
