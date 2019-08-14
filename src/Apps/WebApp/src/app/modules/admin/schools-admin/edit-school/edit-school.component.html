@@ -4,15 +4,17 @@
   <div class="row">
     <div class="form-group col">
       <label>Name:</label>
-      <input class="form-control" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
-      <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+      <input class="form-control" formControlName="name"
+        [ngClass]="{ 'is-invalid': (submitted || f.name.dirty) && f.name.invalid }">
+      <div *ngIf="(submitted || f.name.dirty) && f.name.invalid" class="invalid-feedback">
         <div *ngIf="f.name.errors.required">School's name is required</div>
       </div>
     </div>
     <div class="form-group col">
       <label>Code:</label>
-      <input class="form-control" formControlName="code">
-      <div *ngIf="submitted && f.code.errors" class="invalid-feedback">
+      <input class="form-control" formControlName="code"
+        [ngClass]="{ 'is-invalid': (submitted || f.code.dirty) && f.code.invalid }">
+      <div *ngIf="(submitted || f.code.dirty) && f.code.invalid" class="invalid-feedback">
         <div *ngIf="f.code.errors.required">School's code is required</div>
       </div>
     </div>
@@ -45,19 +47,27 @@
     <div class="row">
       <div class="form-group col">
         <label>Coutry:</label>
-        <select class="form-control" formControlName="countryId">
-          <option *ngFor="let country of countries" [ngValue]="country.id" [selected]="!countryId && value === countries[0]">
+        <select class="form-control" formControlName="countryId"
+          [ngClass]="{ 'is-invalid': submitted && fLocation.countryId.invalid }">
+          <option *ngFor="let country of countries" [ngValue]="country.id">
             {{country.name}}
           </option>
         </select>
+        <div *ngIf="submitted && fLocation.countryId.invalid" class="invalid-feedback">
+          <div *ngIf="fLocation.countryId.errors.required">Country is required</div>
+        </div>
       </div>
       <div class="form-group col">
         <label>Cities:</label>
-        <select class="form-control" formControlName="cityId">
+        <select class="form-control" formControlName="cityId"
+          [ngClass]="{ 'is-invalid': submitted && fLocation.cityId.invalid }">
           <option *ngFor="let city of cities" [value]="city.id">
             {{city.name}}
           </option>
         </select>
+        <div *ngIf="submitted && fLocation.cityId.invalid" class="invalid-feedback">
+          <div *ngIf="fLocation.cityId.errors.required">City is required</div>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -82,6 +92,6 @@
     <textarea class="form-control" rows="5" formControlName="description"></textarea>
   </div>
   <div class="float-right">
-    <button class="btn active">Save</button>
+    <button class="btn active" [disabled]="editForm.invalid">Save</button>
   </div>
 </form>
