@@ -27,8 +27,8 @@ export class SchoolService {
     return this.httpClient.get<SchoolModel>(`${environment.coreApi}/${SchoolApi.getSchoolApi(schoolId)}`);
   }
 
-  public createSchool(school: SchoolModel): Observable<SchoolModel> {
-    return this.httpClient.post<SchoolModel>(`${environment.coreApi}/${SchoolApi.getSchoolsApi()}`, school);
+  public createSchool(school: SchoolModel): Observable<string> {
+    return this.httpClient.post<string>(`${environment.coreApi}/${SchoolApi.getSchoolsApi()}`, school);
   }
 
   public searchSchools(searchModel: SearchModel): Observable<SchoolModel[]> {
@@ -43,12 +43,12 @@ export class SchoolService {
     return this.httpClient.get<ProgramModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolProgarmApi(schoolId)}`);
   }
 
-  public updateSchool(school: SchoolModel): Observable<SchoolModel> {
-    return this.httpClient.put<SchoolModel>(`${environment.coreApi}/${SchoolApi.getSchoolsApi()}`, school);
+  public updateSchool(school: SchoolModel): Observable<void> {
+    return this.httpClient.put<void>(`${environment.coreApi}/${SchoolApi.getSchoolsApi()}`, school);
   }
 
-  public deleteSchool(schoolId: string): Observable<SchoolModel> {
-    return this.httpClient.delete<SchoolModel>(`${environment.coreApi}/${SchoolApi.getSchoolApi(schoolId)}`);
+  public deleteSchool(schoolId: string): Observable<void> {
+    return this.httpClient.delete<void>(`${environment.coreApi}/${SchoolApi.getSchoolApi(schoolId)}`);
   }
 }
 

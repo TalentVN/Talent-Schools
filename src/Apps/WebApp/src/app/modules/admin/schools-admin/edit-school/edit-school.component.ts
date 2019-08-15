@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { map, filter, switchMap } from 'rxjs/operators';
 
 import { SchoolService } from 'src/app/core/services/school.service';
 import { SchoolTypeOption } from 'src/app/shared/options/school-type.option';
@@ -62,16 +63,14 @@ export class EditSchoolComponent implements OnInit {
   get fLocation() { return (this.f.location as FormGroup).controls };
 
   private getSchool(): void {
-    this.route.paramMap.subscribe(params => {
-      this.schoolId = params.get('id');
-
-      if (this.schoolId) {
-        this.schoolService.getSchool(this.schoolId).subscribe(
-          school => this.editForm.patchValue(school),
-          error => console.error(error)
-        );
-      }
-    });
+    this.route.paramMap.pipe(
+      map(params => this.schoolId = params.get('id')),
+      filter(id => !!id),
+      switchMap(id => this.schoolService.getSchool(id))
+    ).subscribe(
+      school => this.editForm.patchValue(school),
+      error => console.error(error)
+    );
   }
 
   private getCountries(): void {
