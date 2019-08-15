@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using TSM.Common.Enums;
 
 namespace TSM.Models.RequestModels
@@ -7,8 +8,10 @@ namespace TSM.Models.RequestModels
     {
         public Guid Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Code { get; set; }
 
         public string Website { get; set; }

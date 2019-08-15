@@ -76,7 +76,7 @@ namespace TSM.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostSchool(CreateSchoolRequestModel requestModel)
+        public async Task<ActionResult<Guid>> PostSchool(CreateSchoolRequestModel requestModel)
         {
             var schoolId = await _schoolService.CreateSchool(requestModel);
 
