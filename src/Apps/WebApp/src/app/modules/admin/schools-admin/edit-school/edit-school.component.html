@@ -92,6 +92,6 @@
     <textarea class="form-control" rows="5" formControlName="description"></textarea>
   </div>
   <div class="float-right">
-    <button class="btn active" [disabled]="editForm.invalid">Save</button>
+    <button class="btn active" [disabled]="editForm.invalid || loading">Save</button>
   </div>
 </form>

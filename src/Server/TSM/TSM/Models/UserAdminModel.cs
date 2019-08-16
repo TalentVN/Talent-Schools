@@ -2,7 +2,7 @@
 
 namespace TSM.Models
 {
-    public class UserModel
+    public class UserAdminModel
     {
         [Required]
         public string Email { get; set; }
