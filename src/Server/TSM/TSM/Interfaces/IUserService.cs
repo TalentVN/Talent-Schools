@@ -6,12 +6,12 @@ using TSM.Models;
 
 namespace TSM.Interfaces
 {
-    interface IUserService
+    public interface IUserService
     {
-        IEnumerable<UserAdminModel> GetUsers();
-        Task<UserAdminModel> GetUser(string email);
+        Task<IEnumerable<UserAdminModel>> GetUsers();
+        Task<UserAdminModel> GetUser(string id);
         Task<IdentityResult> CreateUser(UserAdminModel requestModel);
-        Task UpdateUser(UserAdminModel requestModel);
-        Task<IdentityResult> DeleteUser(string email);
+        Task<IdentityResult> UpdateUser(UserAdminModel requestModel);
+        Task<IdentityResult> DeleteUser(string id);
     }
 }

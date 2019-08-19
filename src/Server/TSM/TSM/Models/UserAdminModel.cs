@@ -4,6 +4,8 @@ namespace TSM.Models
 {
     public class UserAdminModel
     {
+        public string Id { get; set; }
+
         [Required]
         public string Email { get; set; }
 
@@ -17,9 +19,8 @@ namespace TSM.Models
         public string LastName { get; set; }
 
         [Required]
-        public string Role { get; set; }
-
-        [Required]
+        public string JwtRole { get; set; }
+        
         public string Address { get; set; }
     }
 }
