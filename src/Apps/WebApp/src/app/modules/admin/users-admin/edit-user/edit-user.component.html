@@ -1,0 +1,57 @@
+<h1 class="header-content" *ngIf="userId">Update user</h1>
+<h1 class="header-content" *ngIf="!userId">Create user</h1>
+<form [formGroup]="editForm" (submit)="onSubmit()">
+  <div class="row">
+    <div class="form-group col">
+      <label>Email:</label>
+      <input class="form-control" formControlName="email" [readonly]='userId'
+        [ngClass]="{ 'is-invalid': (submitted || f.email.dirty) && f.email.invalid }">
+      <div *ngIf="(submitted || f.email.dirty) && f.email.invalid" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">User's email is required</div>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label>Password:</label>
+      <input class="form-control" formControlName="password"
+        [ngClass]="{ 'is-invalid': (submitted || f.password.dirty) && f.password.invalid }">
+      <div *ngIf="(submitted || f.password.dirty) && f.password.invalid" class="invalid-feedback">
+        <div *ngIf="f.password.errors.required">User's password is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col">
+      <label>First Name:</label>
+      <input class="form-control" formControlName="website"
+        [ngClass]="{ 'is-invalid': (submitted || f.firstName.dirty) && f.firstName.invalid }">
+      <div *ngIf="(submitted || f.firstName.dirty) && f.firstName.invalid" class="invalid-feedback">
+        <div *ngIf="f.firstName.errors.required">User's first name is required</div>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label>Last Name:</label>
+      <input class="form-control" formControlName="website"
+        [ngClass]="{ 'is-invalid': (submitted || f.lastName.dirty) && f.lastName.invalid }">
+      <div *ngIf="(submitted || f.lastName.dirty) && f.lastName.invalid" class="invalid-feedback">
+        <div *ngIf="f.lastName.errors.required">User's last name is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col">
+      <label>Role:</label>
+      <select class="form-control" formControlName="jwtRole"
+        [ngClass]="{ 'is-invalid': submitted && f.jwtRole.invalid }">
+        <option value="Admin">Admin</option>
+        <option value="User">User</option>
+      </select>
+      <div *ngIf="submitted && f.jwtRole.invalid" class="invalid-feedback">
+        <div *ngIf="f.jwtRole.errors.required">User's role is required</div>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label>Address:</label>
+      <input class="form-control" formControlName="address">
+    </div>
+  </div>
+</form>

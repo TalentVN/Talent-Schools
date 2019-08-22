@@ -15,6 +15,7 @@ namespace TSM.Common
         public AutoMapperProfile()
         {
             CreateMap<IdentityResult, CreateUserResponseModel>();
+            CreateMap<ApplicationUser, UserAdminModel>();
             CreateMap<ApplicationUser, UserResponseModel>();
             CreateMap<SignInResult, LoginResponseModel>();
             CreateMap<School, SchoolResponseModel>();

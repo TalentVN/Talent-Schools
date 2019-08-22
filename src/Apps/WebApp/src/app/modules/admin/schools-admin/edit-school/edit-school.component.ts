@@ -133,7 +133,7 @@ export class EditSchoolComponent implements OnInit {
 
   private createSchool(): void {
     this.schoolService.createSchool(this.editForm.value).subscribe(
-      schoolId => this.router.navigate(['../edit', schoolId], { relativeTo: this.route }),
+      schoolId => this.router.navigate(['../', schoolId], { relativeTo: this.route }),
       error => {
         console.error(error);
         this.loading = false;

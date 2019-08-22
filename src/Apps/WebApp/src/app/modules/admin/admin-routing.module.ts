@@ -9,8 +9,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/admin/schools',
+        redirectTo: '/admin/users',
         pathMatch: 'full'
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('./users-admin/users-admin.module').then(s => s.UsersAdminModule)
       },
       {
         path: 'schools',

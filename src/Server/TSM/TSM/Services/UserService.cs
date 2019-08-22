@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TSM.Data.Entities;
 using TSM.Interfaces;
-using TSM.Logging;
 using TSM.Models;
 
 namespace TSM.Services
