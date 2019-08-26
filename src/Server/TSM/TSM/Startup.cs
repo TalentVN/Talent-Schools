@@ -27,6 +27,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Logging;
 using TSM.Interfaces;
 using TSM.Services;
+using System.Security.Claims;
 
 namespace TSM
 {
@@ -99,6 +100,17 @@ namespace TSM
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+            });
+
+            services.AddAuthorization(x =>
+            {
+                x.AddPolicy("Admin", policy => 
+                    policy.RequireAssertion(context =>
+                        context.User.FindFirst(ClaimTypes.Role)?.Value == "Admin"));
+
+                x.AddPolicy("Orginaztion", policy =>
+                    policy.RequireAssertion(context =>
+                        context.User.FindFirst(ClaimTypes.Role)?.Value == "Orginaztion"));
             });
 
             services.Configure<IdentityOptions>(options =>

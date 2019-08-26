@@ -72,7 +72,7 @@ export class EditUserComponent implements OnInit {
         this.editForm.setControl('password', new FormControl(''));
         this.editForm.setControl('confirmPassword', new FormControl(''));
       },
-      error => console.error(error)
+      error => this.error = error
     );
   }
 
@@ -94,7 +94,7 @@ export class EditUserComponent implements OnInit {
   private updateUser(): void {
     this.userService.updateUser(this.editForm.value).subscribe(
       result => {
-        if (result.success) {
+        if (result.succeeded) {
           this.router.navigate(['admin']);
         } else {
           this.error = result.errors[0].description;
@@ -102,7 +102,7 @@ export class EditUserComponent implements OnInit {
         }
       },
       error => {
-        console.error(error);
+        this.error = error;
         this.loading = false;
       });
   }
@@ -110,7 +110,7 @@ export class EditUserComponent implements OnInit {
   private createUser(): void {
     this.userService.createUser(this.editForm.value).subscribe(
       result => {
-        if (result.success) {
+        if (result.succeeded) {
           this.router.navigate(['admin']);
         } else {
           this.error = result.errors[0].description;
@@ -118,7 +118,7 @@ export class EditUserComponent implements OnInit {
         }
       },
       error => {
-        console.error(error);
+        this.error = error;
         this.loading = false;
       });
   }

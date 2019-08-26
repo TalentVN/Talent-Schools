@@ -17,7 +17,8 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./modules/admin/admin.module').then(s => s.AdminModule),
-    canActivate: [AuthGuard]
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'Admin' }
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

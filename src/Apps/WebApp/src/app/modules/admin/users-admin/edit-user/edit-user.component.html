@@ -58,6 +58,7 @@
         [ngClass]="{ 'is-invalid': submitted && f.jwtRole.invalid }">
         <option value="User">User</option>
         <option value="Admin">Admin</option>
+        <option value="Organization">Organization</option>
       </select>
       <div *ngIf="submitted && f.jwtRole.invalid" class="invalid-feedback">
         <div *ngIf="f.jwtRole.errors.required">User's role is required</div>

@@ -29,7 +29,7 @@ export class UsersAdminComponent implements OnInit {
     if (confirm("Are you sure to delete this user?")) {
       this.userService.deleteUser(id).subscribe(
         result => {
-          if (result.success) {
+          if (result.succeeded) {
             this.users = this.users.filter(s => s.id !== id);
           } else {
             alert(result.errors[0].description);

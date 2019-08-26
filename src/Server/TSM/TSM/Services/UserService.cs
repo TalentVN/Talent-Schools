@@ -72,14 +72,23 @@ namespace TSM.Services
 
         public async Task<IdentityResult> UpdateUser(UserAdminModel requestModel)
         {
+            IdentityResult identityResult;
+
             var user = await _userManager.FindByEmailAsync(requestModel.Email);
             user.FirstName = requestModel.FirstName;
             user.LastName = requestModel.LastName;
             user.JwtRole = requestModel.JwtRole;
             user.Address = requestModel.Address;
 
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var identityResult = await _userManager.ResetPasswordAsync(user, token, requestModel.PassWord);
+            if (string.IsNullOrEmpty(requestModel.PassWord))
+            {
+                identityResult = await _userManager.UpdateAsync(user);
+            }
+            else
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                identityResult = await _userManager.ResetPasswordAsync(user, token, requestModel.PassWord);
+            }
 
             return identityResult;
         }
