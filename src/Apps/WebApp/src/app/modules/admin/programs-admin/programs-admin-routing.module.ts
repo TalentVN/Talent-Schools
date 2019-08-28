@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { SchoolsAdminComponent } from './schools-admin.component';
-import { EditSchoolComponent } from './edit-school/edit-school.component';
+import { ProgramsAdminComponent } from './programs-admin.component';
+import { EditProgramComponent } from './edit-program/edit-program.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: SchoolsAdminComponent
+    component: ProgramsAdminComponent
   },
   {
     path: 'create',
-    component: EditSchoolComponent,
+    component: EditProgramComponent,
     pathMatch: 'full'
   },
   {
     path: ':id',
-    component: EditSchoolComponent
+    component: EditProgramComponent
   }
 ];
 
@@ -25,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SchoolsAdminRoutingModule { }
+export class ProgramsAdminRoutingModule { }
