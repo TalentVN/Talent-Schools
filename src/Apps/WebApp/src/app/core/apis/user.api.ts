@@ -3,7 +3,7 @@ export class UserApi {
     return 'api/v1/Users';
   }
 
-  public static getUserApi(email: string): string {
-    return `api/v1/Users/${email}`;
+  public static getUserApi(id: string): string {
+    return `api/v1/Users/${id}`;
   }
 }

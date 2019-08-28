@@ -18,7 +18,7 @@ export class UsersAdminComponent implements OnInit {
     this.getUsers();
   }
 
-  getUsers(): void {
+  private getUsers(): void {
     this.userService.getUsers().subscribe(
       users => this.users = users,
       error => console.log(error)

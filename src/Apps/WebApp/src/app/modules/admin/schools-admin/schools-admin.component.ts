@@ -17,7 +17,7 @@ export class SchoolsAdminComponent implements OnInit {
     this.getSchools();
   }
 
-  getSchools(): void {
+  private getSchools(): void {
     this.schoolService.getSchools().subscribe(
       schools => this.schools = schools,
       error => console.log(error)

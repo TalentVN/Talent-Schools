@@ -15,7 +15,23 @@ export class EducationProgramService {
     private httpClient: HttpClient
   ) { }
 
-  public getPorgrams(): Observable<ProgramModel[]> {
+  public getPrograms(): Observable<ProgramModel[]> {
     return this.httpClient.get<ProgramModel[]>(`${environment.coreApi}/${EducationProgramApi.getProgramsApi()}`);
+  }
+
+  public getProgram(id: string): Observable<ProgramModel> {
+    return this.httpClient.get<ProgramModel>(`${environment.coreApi}/${EducationProgramApi.getProgramApi(id)}`);
+  }
+
+  public createProgram(program: ProgramModel): Observable<void> {
+    return this.httpClient.post<void>(`${environment.coreApi}/${EducationProgramApi.getProgramsApi()}`, program);
+  }
+
+  public updateProgram(program: ProgramModel): Observable<void> {
+    return this.httpClient.put<void>(`${environment.coreApi}/${EducationProgramApi.getProgramsApi()}`, program);
+  }
+
+  public deleteProgram(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${environment.coreApi}/${EducationProgramApi.getProgramApi(id)}`);
   }
 }
