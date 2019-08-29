@@ -15,7 +15,27 @@ export class MajorService {
     private httpClient: HttpClient
   ) { }
 
-  public getPorgrams(): Observable<MajorModel[]> {
+  public getMajors(): Observable<MajorModel[]> {
     return this.httpClient.get<MajorModel[]>(`${environment.coreApi}/${MajorApi.getMajorsApi()}`);
+  }
+
+  public getMajor(id: string): Observable<MajorModel> {
+    return this.httpClient.get<MajorModel>(`${environment.coreApi}/${MajorApi.getMajorApi(id)}`);
+  }
+
+  public createMajor(program: MajorModel): Observable<void> {
+    return this.httpClient.post<void>(`${environment.coreApi}/${MajorApi.getMajorsApi()}`, program);
+  }
+
+  public updateMajor(program: MajorModel): Observable<void> {
+    return this.httpClient.put<void>(`${environment.coreApi}/${MajorApi.getMajorsApi()}`, program);
+  }
+
+  public changeActiveMajor(id: string): Observable<void> {
+    return this.httpClient.post<void>(`${environment.coreApi}/${MajorApi.changeActiveMajorApi(id)}`, null);
+  }
+
+  public deleteMajor(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${environment.coreApi}/${MajorApi.getMajorApi(id)}`);
   }
 }
