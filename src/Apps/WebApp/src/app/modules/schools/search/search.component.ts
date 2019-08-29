@@ -93,7 +93,7 @@ export class SearchComponent implements OnInit {
   }
 
   private loadPrograms(): void {
-    this.educationProgramService.getPorgrams().subscribe(
+    this.educationProgramService.getPrograms().subscribe(
       data => {
         this.programs = data;
         this.searchModel.selectedProgram = this.programs[1].id;

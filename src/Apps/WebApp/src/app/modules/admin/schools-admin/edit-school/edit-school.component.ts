@@ -114,6 +114,8 @@ export class EditSchoolComponent implements OnInit {
       return;
     }
 
+    console.log(this.editForm.value);
+      
     this.loading = true;
     if (this.schoolId) {
       this.updateSchool();

@@ -16,6 +16,8 @@ export class EditProgramComponent implements OnInit {
   loading = false;
   submitted = false;
 
+  programId: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -28,7 +30,8 @@ export class EditProgramComponent implements OnInit {
       id: [''],
       name: ['', Validators.required],
       code: ['', Validators.required],
-      description: ['']
+      description: [''],
+      isActive: [true]
     });
 
     this.getProgram();
@@ -39,7 +42,7 @@ export class EditProgramComponent implements OnInit {
 
   private getProgram(): void {
     this.route.paramMap.pipe(
-      map(params => params.get('id')),
+      map(params => this.programId = params.get('id')),
       filter(id => !!id),
       switchMap(id => this.programService.getProgram(id))
     ).subscribe(
@@ -56,7 +59,7 @@ export class EditProgramComponent implements OnInit {
     }
 
     this.loading = true;
-    if (this.f.id.value) {
+    if (this.programId) {
       this.updateProgram();
     } else {
       this.createProgram();

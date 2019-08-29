@@ -1,1 +1,31 @@
-<p>programs-admin works!</p>
+<h1>Programs</h1>
+<div class="float-right">
+  <button class="btn active" [routerLink]="['create']">Create</button>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Code</th>
+      <th scope="col">Description</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let program of programs; let i = index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{program.name}}</td>
+      <td>{{program.code}}</td>
+      <td>{{program.description}}</td>
+      <td>
+        <a [routerLink]="[program.id]">Edit</a> |
+        <a [routerLink]="" (click)="deleteProgram(program.id)">Delete</a> |
+        <a [routerLink]="" (click)="changeActive(program.id)">
+          <span *ngIf="program.isActive">Deactivate</span>
+          <span *ngIf="!program.isActive">Activate</span>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -39,7 +39,7 @@ export class SchoolService {
     return this.httpClient.get<MajorModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolMajorApi(schoolId)}`);
   }
 
-  public getSchoolPrograms(schoolId: string): Observable<MajorModel[]> {
+  public getSchoolPrograms(schoolId: string): Observable<ProgramModel[]> {
     return this.httpClient.get<ProgramModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolProgarmApi(schoolId)}`);
   }
 

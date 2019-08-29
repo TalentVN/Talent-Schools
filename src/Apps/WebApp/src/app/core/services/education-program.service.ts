@@ -31,6 +31,10 @@ export class EducationProgramService {
     return this.httpClient.put<void>(`${environment.coreApi}/${EducationProgramApi.getProgramsApi()}`, program);
   }
 
+  public changeActiveProgram(id: string): Observable<void> {
+    return this.httpClient.post<void>(`${environment.coreApi}/${EducationProgramApi.changeActiveProgramApi(id)}`, null);
+  }
+
   public deleteProgram(id: string): Observable<void> {
     return this.httpClient.delete<void>(`${environment.coreApi}/${EducationProgramApi.getProgramApi(id)}`);
   }

@@ -20,7 +20,7 @@ programs: ProgramModel[];
   private getPrograms(): void {
     this.programService.getPrograms().subscribe(
       programs => this.programs = programs,
-      error => console.log(error)
+      error => console.error(error)
     )
   }
 
@@ -28,8 +28,18 @@ programs: ProgramModel[];
     if (confirm("Are you sure to delete this program?")) {
       this.programService.deleteProgram(id).subscribe(
         () => this.programs = this.programs.filter(s => s.id !== id),
-        error => console.log(error)
+        error => console.error(error)
       );
     }
+  }
+
+  changeActive(id: string): void {
+    this.programService.changeActiveProgram(id).subscribe(
+      () => {
+          let currentProgram = this.programs.find(p => p.id == id);
+          currentProgram.isActive = !currentProgram.isActive;
+      },
+      error => console.error(error)
+    )
   }
 }

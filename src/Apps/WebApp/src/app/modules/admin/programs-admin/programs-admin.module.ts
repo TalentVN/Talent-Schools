@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProgramsAdminRoutingModule } from './programs-admin-routing.module';
 import { ProgramsAdminComponent } from './programs-admin.component';
 import { EditProgramComponent } from './edit-program/edit-program.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { EditProgramComponent } from './edit-program/edit-program.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     ProgramsAdminRoutingModule
   ]
 })

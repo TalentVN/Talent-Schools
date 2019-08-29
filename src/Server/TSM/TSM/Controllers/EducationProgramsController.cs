@@ -1,13 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TSM.Data.Application;
-using TSM.Data.Entities;
 using TSM.Interfaces;
 using TSM.Logging;
 using TSM.Models;
@@ -55,13 +49,33 @@ namespace TSM.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<EducationProgramModel>> PostEducationProgram(EducationProgramModel educationProgram)
+        public async Task<IActionResult> PostEducationProgram(EducationProgramModel educationProgram)
         {
             _logger.LogInformation($"PostEducationProgram {educationProgram}");
 
-            var program = await _educationProgramService.CreateEducationProgram(educationProgram);
+            await _educationProgramService.CreateEducationProgram(educationProgram);
 
-            return Ok(program);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> PutEducationProgram(EducationProgramModel educationProgram)
+        {
+            _logger.LogInformation($"PostEducationProgram {educationProgram}");
+
+            await _educationProgramService.UpdateEducationProgram(educationProgram);
+
+            return Ok();
+        }
+
+        [HttpPost("ChangeActive/{id}")]
+        public async Task<IActionResult> ChangeActiveEducationProgram(string id)
+        {
+            _logger.LogInformation($"ChangeActiveEducationProgram {id}");
+
+            await _educationProgramService.ChangeActive(Guid.Parse(id));
+
+            return Ok();
         }
 
         [HttpDelete("{id}")]

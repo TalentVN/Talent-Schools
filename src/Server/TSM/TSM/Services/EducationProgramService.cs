@@ -27,25 +27,44 @@ namespace TSM.Services
 
         public async Task<IEnumerable<EducationProgramModel>> GetEducationPrograms()
         {
-            var programs = await _context.EducationPrograms.ToListAsync();
+            var programs = await _context.EducationPrograms.AsNoTracking().ToListAsync();
 
             return _mapper.Map<IEnumerable<EducationProgramModel>>(programs);
         }
 
         public async Task<EducationProgramModel> GetEducationProgram(Guid id)
         {
-            var program = await _context.EducationPrograms.SingleOrDefaultAsync(x => x.Id.Equals(id));
+            var program = await _context.EducationPrograms.AsNoTracking().SingleOrDefaultAsync(x => x.Id.Equals(id));
 
             return _mapper.Map<EducationProgramModel>(program);
         }
 
-        public async Task<EducationProgramModel> CreateEducationProgram(EducationProgramModel model)
+        public async Task CreateEducationProgram(EducationProgramModel model)
         {
             EducationProgram educationProgram = new EducationProgram(model.Name, model.Description, model.Code);
 
             await _context.EducationPrograms.AddAsync(educationProgram);
+            await _context.SaveChangesAsync();
+        }
 
-            return _mapper.Map<EducationProgramModel>(educationProgram);
+        public async Task UpdateEducationProgram(EducationProgramModel model)
+        {
+            var program = await _context.EducationPrograms.SingleOrDefaultAsync(x => x.Id.Equals(model.Id));
+            program.Name = model.Name;
+            program.Description = model.Description;
+            program.Code = model.Code;
+            program.IsActive = model.IsActive;
+
+            _context.EducationPrograms.Update(program);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ChangeActive(Guid id)
+        {
+            var program = await _context.EducationPrograms.SingleOrDefaultAsync(x => x.Id.Equals(id));
+            program.IsActive = !program.IsActive;
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteEducationProgram(Guid id)

@@ -3,4 +3,5 @@ export class ProgramModel {
     name: string;
     description: string;
     code: string;
+    isActive: boolean;
 }

@@ -10,7 +10,9 @@ namespace TSM.Interfaces
     {
         Task<IEnumerable<EducationProgramModel>> GetEducationPrograms();
         Task<EducationProgramModel> GetEducationProgram(Guid id);
-        Task<EducationProgramModel> CreateEducationProgram(EducationProgramModel model);
+        Task CreateEducationProgram(EducationProgramModel model);
+        Task UpdateEducationProgram(EducationProgramModel model);
+        Task ChangeActive(Guid id);
         Task DeleteEducationProgram(Guid id);
     }
 }
