@@ -3,4 +3,5 @@ export class MajorModel {
     name: string;
     description: string;
     code: string;
+    isActive: boolean;
 }

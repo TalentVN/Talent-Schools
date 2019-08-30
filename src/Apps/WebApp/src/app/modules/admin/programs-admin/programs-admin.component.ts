@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ProgramModel } from 'src/app/shared/models/Program.model';
 import { EducationProgramService } from 'src/app/core/services/education-program.service';
 
@@ -9,7 +10,7 @@ import { EducationProgramService } from 'src/app/core/services/education-program
 })
 export class ProgramsAdminComponent implements OnInit {
 
-programs: ProgramModel[];
+  programs: ProgramModel[];
 
   constructor(private programService: EducationProgramService) { }
 
@@ -36,8 +37,8 @@ programs: ProgramModel[];
   changeActive(id: string): void {
     this.programService.changeActiveProgram(id).subscribe(
       () => {
-          let currentProgram = this.programs.find(p => p.id == id);
-          currentProgram.isActive = !currentProgram.isActive;
+        let currentProgram = this.programs.find(p => p.id == id);
+        currentProgram.isActive = !currentProgram.isActive;
       },
       error => console.error(error)
     )

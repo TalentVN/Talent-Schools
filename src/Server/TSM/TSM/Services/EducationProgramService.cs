@@ -59,7 +59,7 @@ namespace TSM.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task ChangeActive(Guid id)
+        public async Task ChangeActiveEducationProgram(Guid id)
         {
             var program = await _context.EducationPrograms.SingleOrDefaultAsync(x => x.Id.Equals(id));
             program.IsActive = !program.IsActive;

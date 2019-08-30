@@ -10,7 +10,9 @@ namespace TSM.Interfaces
     {
         Task<IEnumerable<MajorModel>> GetMajors();
         Task<MajorModel> GetMajor(Guid id);
-        Task<MajorModel> CreateMajor(MajorModel majorModel);
+        Task CreateMajor(MajorModel majorModel);
+        Task UpdateMajor(MajorModel model);
+        Task ChangeActiveMajor(Guid id);
         Task DeleteMajor(Guid id);
     }
 }

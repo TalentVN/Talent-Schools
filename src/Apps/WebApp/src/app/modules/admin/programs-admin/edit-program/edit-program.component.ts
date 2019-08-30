@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map, filter, switchMap } from 'rxjs/operators';
 
 import { EducationProgramService } from 'src/app/core/services/education-program.service';
-import { map, filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-program',

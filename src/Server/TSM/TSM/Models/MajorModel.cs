@@ -14,5 +14,7 @@ namespace TSM.Models
         public string Description { get; set; }
 
         public string Code { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

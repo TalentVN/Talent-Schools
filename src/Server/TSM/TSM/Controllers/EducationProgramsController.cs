@@ -61,7 +61,7 @@ namespace TSM.Controllers
         [HttpPut]
         public async Task<IActionResult> PutEducationProgram(EducationProgramModel educationProgram)
         {
-            _logger.LogInformation($"PostEducationProgram {educationProgram}");
+            _logger.LogInformation($"PutEducationProgram {educationProgram}");
 
             await _educationProgramService.UpdateEducationProgram(educationProgram);
 
@@ -73,7 +73,7 @@ namespace TSM.Controllers
         {
             _logger.LogInformation($"ChangeActiveEducationProgram {id}");
 
-            await _educationProgramService.ChangeActive(Guid.Parse(id));
+            await _educationProgramService.ChangeActiveEducationProgram(Guid.Parse(id));
 
             return Ok();
         }

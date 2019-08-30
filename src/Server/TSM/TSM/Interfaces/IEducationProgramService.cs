@@ -12,7 +12,7 @@ namespace TSM.Interfaces
         Task<EducationProgramModel> GetEducationProgram(Guid id);
         Task CreateEducationProgram(EducationProgramModel model);
         Task UpdateEducationProgram(EducationProgramModel model);
-        Task ChangeActive(Guid id);
+        Task ChangeActiveEducationProgram(Guid id);
         Task DeleteEducationProgram(Guid id);
     }
 }

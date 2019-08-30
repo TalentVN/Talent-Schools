@@ -1,1 +1,31 @@
-<p>majors-admin works!</p>
+<h1>Majors</h1>
+<div class="float-right">
+  <button class="btn active" [routerLink]="['create']">Create</button>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Code</th>
+      <th scope="col">Description</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let major of majors; let i = index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{major.name}}</td>
+      <td>{{major.code}}</td>
+      <td>{{major.description}}</td>
+      <td>
+        <a [routerLink]="[major.id]">Edit</a> |
+        <a [routerLink]="" (click)="deleteMajor(major.id)">Delete</a> |
+        <a [routerLink]="" (click)="changeActive(major.id)">
+          <span *ngIf="major.isActive">Deactivate</span>
+          <span *ngIf="!major.isActive">Activate</span>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,12 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TSM.Data.Application;
-using TSM.Data.Entities;
 using TSM.Interfaces;
 using TSM.Logging;
 using TSM.Models;
@@ -53,13 +48,33 @@ namespace TSM.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MajorModel>> PostMajor(MajorModel majorModel)
+        public async Task<IActionResult> PostMajor(MajorModel majorModel)
         {
             _logger.LogInformation($"PostMajor {majorModel}");
 
-            var major = await _majorService.CreateMajor(majorModel);
+            await _majorService.CreateMajor(majorModel);
 
-            return Ok(major);
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> PutMajor(MajorModel major)
+        {
+            _logger.LogInformation($"PutMajor {major}");
+
+            await _majorService.UpdateMajor(major);
+
+            return Ok();
+        }
+
+        [HttpPost("ChangeActive/{id}")]
+        public async Task<IActionResult> ChangeActiveMajor(string id)
+        {
+            _logger.LogInformation($"ChangeActiveMajor {id}");
+
+            await _majorService.ChangeActiveMajor(Guid.Parse(id));
+
+            return Ok();
         }
 
         [HttpDelete("{id}")]
