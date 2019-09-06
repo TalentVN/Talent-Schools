@@ -1,0 +1,20 @@
+<div class="container-pagination">
+  <!-- pager -->
+  <ul *ngIf="currentPage" class="pagination">
+    <li [ngClass]="{disabled:currentPage === 1}">
+      <a (click)="changePage(1)">First</a>
+    </li>
+    <li [ngClass]="{disabled:currentPage === 1}">
+      <a (click)="changePage(currentPage - 1)">Previous</a>
+    </li>
+    <li *ngFor="let page of makePaging()" [ngClass]="{active:currentPage === page}">
+      <a (click)="changePage(page)">{{page}}</a>
+    </li>
+    <li [ngClass]="{disabled:currentPage === totalPages}">
+      <a (click)="changePage(currentPage + 1)">Next</a>
+    </li>
+    <li [ngClass]="{disabled:currentPage === totalPages}">
+      <a (click)="changePage(totalPages)">Last</a>
+    </li>
+  </ul>
+</div>

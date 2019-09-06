@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/models/user.model';
 import { environment } from 'src/environments/environment';
 import { UserApi } from '../apis/user.api';
+import { PagingModel } from 'src/app/shared/models/Paging.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getUsers(): Observable<User[]> {
-    return this.httpClient.get<User[]>(`${environment.coreApi}/${UserApi.getUsersApi()}`);
+  public getPagingUsers(currentPage: number): Observable<PagingModel<User>> {
+    return this.httpClient.get<PagingModel<User>>(`${environment.coreApi}/${UserApi.getPagingUsersApi(currentPage)}`);
   }
 
   public getUser(id: string): Observable<User> {

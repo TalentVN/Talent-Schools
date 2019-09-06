@@ -27,10 +27,10 @@ namespace TSM.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserAdminModel>>> GetUsers()
+        public async Task<ActionResult<PagingModel<UserAdminModel>>> GetPagingUsers(int currentPage)
         {
-            var user = await _userService.GetUsers();
-            return Ok(user);
+            var pagingModel = await _userService.GetPagingUsers(currentPage);
+            return Ok(pagingModel);
         }
 
         [HttpGet("{id}")]

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TSM.Common;
 using TSM.Data.Application;
 using TSM.Data.Entities;
 using TSM.Interfaces;
@@ -26,26 +27,30 @@ namespace TSM.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<SchoolResponseModel>> GetSchools()
+        public async Task<PagingModel<SchoolResponseModel>> GetPagingSchools(int currentPage)
         {
+            int schoolsCount = await _context.Majors.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)schoolsCount / Constants.DEFAULT_PAGING_SIZE);
+
             var schools = await _context.Schools
                                         .Include(x => x.Location)
                                             .ThenInclude(l => l.Country)
                                         .Include(x => x.Location)
                                             .ThenInclude(l => l.City)
                                         .Include(x => x.Ratings)
+                                        .Skip((currentPage - 1) * Constants.DEFAULT_PAGING_SIZE)
+                                        .Take(Constants.DEFAULT_PAGING_SIZE)
                                         .OrderBy(x => x.Name)
-                                        .AsNoTracking()
-                                        .ToArrayAsync();
+                                        .AsNoTracking().ToArrayAsync();
 
-            var result = _mapper.Map<IEnumerable<SchoolResponseModel>>(schools).ToArray();
+            var schoolModels = _mapper.Map<IEnumerable<SchoolResponseModel>>(schools).ToArray();
 
             for (int i = 0; i < schools.Count(); i++)
             {
-                result[i].RatingCount = schools[i].Ratings.Count;
+                schoolModels[i].RatingCount = schools[i].Ratings.Count;
             }
 
-            return result;
+            return new PagingModel<SchoolResponseModel>(currentPage, totalPages, schoolModels);
         }
 
         public async Task<IEnumerable<SchoolResponseModel>> SearchSchools(SearchSchoolModel searchModel)

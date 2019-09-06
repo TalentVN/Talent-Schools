@@ -10,7 +10,7 @@ namespace TSM.Interfaces
 {
     public interface ISchoolService
     {
-        Task<IEnumerable<SchoolResponseModel>> GetSchools();
+        Task<PagingModel<SchoolResponseModel>> GetPagingSchools(int currentPage);
         Task<SchoolResponseModel> GetSchool(Guid id);
         Task<Guid> CreateSchool(CreateSchoolRequestModel requestModel);
         Task UpdateSchool(UpdateSchoolRequestModel requestModel);

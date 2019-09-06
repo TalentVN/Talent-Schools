@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TSM.Common;
 using TSM.Data.Application;
 using TSM.Data.Entities;
 using TSM.Interfaces;
@@ -25,12 +26,25 @@ namespace TSM.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        // Must to implement paging with all features listAll
         public async Task<IEnumerable<MajorModel>> GetMajors()
         {
-            var majors = await _context.Majors.AsNoTracking().ToListAsync();
+            var majors = await _context.Majors.OrderBy(x => x.Name).AsNoTracking().ToListAsync();
 
             return _mapper.Map<IEnumerable<MajorModel>>(majors);
+        }
+
+        public async Task<PagingModel<MajorModel>> GetPagingMajors(int currentPage)
+        {
+            int majorsCount = await _context.Majors.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)majorsCount / Constants.DEFAULT_PAGING_SIZE);
+
+            var majors = await _context.Majors.Skip((currentPage - 1) * Constants.DEFAULT_PAGING_SIZE)
+                                                .Take(Constants.DEFAULT_PAGING_SIZE)
+                                                .OrderBy(x => x.Name)
+                                                .AsNoTracking().ToListAsync();
+            var majorModels = _mapper.Map<IEnumerable<MajorModel>>(majors);
+
+            return new PagingModel<MajorModel>(currentPage, totalPages, majorModels);
         }
 
         public async Task<MajorModel> GetMajor(Guid id)

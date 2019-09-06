@@ -9,6 +9,7 @@ namespace TSM.Interfaces
     public interface IMajorService
     {
         Task<IEnumerable<MajorModel>> GetMajors();
+        Task<PagingModel<MajorModel>> GetPagingMajors(int currentPage);
         Task<MajorModel> GetMajor(Guid id);
         Task CreateMajor(MajorModel majorModel);
         Task UpdateMajor(MajorModel model);

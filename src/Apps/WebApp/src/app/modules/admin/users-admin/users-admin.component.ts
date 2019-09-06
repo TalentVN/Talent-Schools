@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { User } from 'src/app/shared/models/user.model';
 import { UserService } from 'src/app/core/services/user.service';
+import { PagingModel } from 'src/app/shared/models/Paging.model';
 
 @Component({
   selector: 'app-users-admin',
@@ -10,17 +11,17 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class UsersAdminComponent implements OnInit {
 
-  users: User[];
+  paging: PagingModel<User>;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.getUsers();
+    this.getPagingUsers(1);
   }
 
-  private getUsers(): void {
-    this.userService.getUsers().subscribe(
-      users => this.users = users,
+  private getPagingUsers(currentPage: number): void {
+    this.userService.getPagingUsers(currentPage).subscribe(
+      paging => this.paging = paging,
       error => console.log(error)
     );
   }
@@ -30,7 +31,7 @@ export class UsersAdminComponent implements OnInit {
       this.userService.deleteUser(id).subscribe(
         result => {
           if (result.succeeded) {
-            this.users = this.users.filter(s => s.id !== id);
+            this.getPagingUsers(this.paging.currentPage);
           } else {
             alert(result.errors[0].description);
           }

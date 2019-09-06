@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace TSM.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize(Policy = "Admin")]
     public class MajorsController : ControllerBase
     {
         private readonly IAppLogger<MajorsController> _logger;
@@ -30,6 +32,20 @@ namespace TSM.Controllers
 
             var majors = await _majorService.GetMajors();
             return Ok(majors);
+        }
+
+        [HttpGet("Page/{currentPage}")]
+        public async Task<ActionResult<PagingModel<MajorModel>>> GetPagingMajors(int currentPage)
+        {
+            _logger.LogInformation("GetPagingMajors");
+
+            if (currentPage < 1)
+            {
+                return NotFound();
+            }
+
+            var pagingModel = await _majorService.GetPagingMajors(currentPage);
+            return Ok(pagingModel);
         }
 
         [HttpGet("{id}")]

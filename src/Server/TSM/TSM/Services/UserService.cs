@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using TSM.Common;
 using TSM.Data.Entities;
 using TSM.Interfaces;
 using TSM.Models;
@@ -26,12 +28,19 @@ namespace TSM.Services
             _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
         }
 
-        public async Task<IEnumerable<UserAdminModel>> GetUsers()
+        public async Task<PagingModel<UserAdminModel>> GetPagingUsers(int currentPage)
         {
-            var users = await _userManager.Users.ToListAsync();
-            var results = _mapper.Map<IEnumerable<UserAdminModel>>(users);
+            int usersCount = await _userManager.Users.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)usersCount / Constants.DEFAULT_PAGING_SIZE);
 
-            return results;
+            var users = await _userManager.Users.Skip((currentPage - 1) * Constants.DEFAULT_PAGING_SIZE)
+                                                .Take(Constants.DEFAULT_PAGING_SIZE)
+                                                .OrderBy(x => x.Email)
+                                                .AsNoTracking().ToListAsync();
+
+            var userModels = _mapper.Map<IEnumerable<UserAdminModel>>(users);
+
+            return new PagingModel<UserAdminModel>(currentPage, totalPages, userModels);
         }
 
         public async Task<UserAdminModel> GetUser(string id)

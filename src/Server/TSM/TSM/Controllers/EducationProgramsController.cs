@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace TSM.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize(Policy = "Admin")]
     public class EducationProgramsController : ControllerBase
     {
         private readonly IAppLogger<EducationProgramsController> _logger;
@@ -31,6 +33,21 @@ namespace TSM.Controllers
             var programs = await _educationProgramService.GetEducationPrograms();
 
             return Ok(programs);
+        }
+
+        [HttpGet("Page/{currentPage}")]
+        public async Task<ActionResult<PagingModel<EducationProgramModel>>> GetPagingEducationPrograms(int currentPage)
+        {
+            _logger.LogInformation("GetPagingEducationPrograms");
+
+            if(currentPage < 1)
+            {
+                return NotFound();
+            }
+
+            var pagingModel = await _educationProgramService.GetPagingEducationPrograms(currentPage);
+
+            return Ok(pagingModel);
         }
 
         [HttpGet("{id}")]

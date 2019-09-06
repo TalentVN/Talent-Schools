@@ -24,7 +24,7 @@
       <td>{{school.tuiTion}}</td>
       <td>
         <a [routerLink]="[school.id]">Edit</a> |
-        <a [routerLink]="" (click)="deleteSchool(school.id)">Delete</a>
+        <a (click)="deleteSchool(school.id)">Delete</a>
       </td>
     </tr>
   </tbody>

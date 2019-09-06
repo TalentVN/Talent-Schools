@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { EducationProgramApi } from '../apis/education-program.api';
 import { environment } from '../../../environments/environment';
 import { ProgramModel } from '../../shared/models/Program.model';
+import { PagingModel } from 'src/app/shared/models/Paging.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class EducationProgramService {
 
   public getPrograms(): Observable<ProgramModel[]> {
     return this.httpClient.get<ProgramModel[]>(`${environment.coreApi}/${EducationProgramApi.getProgramsApi()}`);
+  }
+
+  public getPagingPrograms(currentPage: number): Observable<PagingModel<ProgramModel>> {
+    return this.httpClient.get<PagingModel<ProgramModel>>(`${environment.coreApi}/${EducationProgramApi.getPagingProgramsApi(currentPage)}`);
   }
 
   public getProgram(id: string): Observable<ProgramModel> {

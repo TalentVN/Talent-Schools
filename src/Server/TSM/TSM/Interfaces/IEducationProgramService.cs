@@ -9,6 +9,7 @@ namespace TSM.Interfaces
     public interface IEducationProgramService
     {
         Task<IEnumerable<EducationProgramModel>> GetEducationPrograms();
+        Task<PagingModel<EducationProgramModel>> GetPagingEducationPrograms(int currentPage);
         Task<EducationProgramModel> GetEducationProgram(Guid id);
         Task CreateEducationProgram(EducationProgramModel model);
         Task UpdateEducationProgram(EducationProgramModel model);

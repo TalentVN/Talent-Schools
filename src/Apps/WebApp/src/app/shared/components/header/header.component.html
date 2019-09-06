@@ -19,7 +19,7 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <div *ngIf="authService.currentUserValue !== null">
-                    <a class="nav-item">Hi! {{authService.currentUserValue.firstName}}</a>
+                    <span class="nav-item">Hi! {{authService.currentUserValue.firstName}}</span>
                     <button *ngIf="authService.currentUserValue.jwtRole === 'Admin'" class="btn btn-light btn-sm ml-2" [routerLink]="['admin']">Admin</button>
                     <button class="btn btn-success active btn-sm" (click)="logout()">Log Out</button>
                 </div>

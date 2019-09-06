@@ -13,15 +13,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let major of majors; let i = index">
+    <tr *ngFor="let major of paging?.data; let i = index">
       <th scope="row">{{i+1}}</th>
       <td>{{major.name}}</td>
       <td>{{major.code}}</td>
       <td>{{major.description}}</td>
       <td>
         <a [routerLink]="[major.id]">Edit</a> |
-        <a [routerLink]="" (click)="deleteMajor(major.id)">Delete</a> |
-        <a [routerLink]="" (click)="changeActive(major.id)">
+        <a (click)="deleteMajor(major.id)">Delete</a> |
+        <a (click)="changeActiveMajor(major.id)">
           <span *ngIf="major.isActive">Deactivate</span>
           <span *ngIf="!major.isActive">Activate</span>
         </a>
@@ -29,3 +29,5 @@
     </tr>
   </tbody>
 </table>
+<app-pagination [currentPage]="paging?.currentPage" [totalPages]="paging?.totalPages"
+  (onChangePage)="getPagingMajors($event)"></app-pagination>

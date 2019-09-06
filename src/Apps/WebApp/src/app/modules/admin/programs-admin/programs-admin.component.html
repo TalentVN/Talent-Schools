@@ -13,15 +13,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let program of programs; let i = index">
+    <tr *ngFor="let program of paging?.data; let i = index">
       <th scope="row">{{i+1}}</th>
       <td>{{program.name}}</td>
       <td>{{program.code}}</td>
       <td>{{program.description}}</td>
       <td>
         <a [routerLink]="[program.id]">Edit</a> |
-        <a [routerLink]="" (click)="deleteProgram(program.id)">Delete</a> |
-        <a [routerLink]="" (click)="changeActive(program.id)">
+        <a (click)="deleteProgram(program.id)">Delete</a> |
+        <a (click)="changeActiveProgram(program.id)">
           <span *ngIf="program.isActive">Deactivate</span>
           <span *ngIf="!program.isActive">Activate</span>
         </a>
@@ -29,3 +29,5 @@
     </tr>
   </tbody>
 </table>
+<app-pagination [currentPage]="paging?.currentPage" [totalPages]="paging?.totalPages"
+  (onChangePage)="getPagingMajors($event)"></app-pagination>

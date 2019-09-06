@@ -23,6 +23,10 @@ const routes: Routes = [
       {
         path: 'programs',
         loadChildren: () => import('./programs-admin/programs-admin.module').then(s => s.ProgramsAdminModule)
+      },
+      {
+        path: 'majors',
+        loadChildren: () => import('./majors-admin/majors-admin.module').then(s => s.MajorsAdminModule)
       }
     ]
   }

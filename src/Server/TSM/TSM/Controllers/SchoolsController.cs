@@ -44,27 +44,30 @@ namespace TSM.Controllers
         /// <param name="searchString"></param>
         /// <returns></returns>
         [HttpPost("Search")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<SchoolResponseModel>>> SearchSchool(SearchSchoolModel searchModel)
         {
             var chools = await _schoolService.SearchSchools(searchModel);
             return Ok(chools);
         }
-
-
+        
         [HttpPost("Filter")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<SchoolResponseModel>>> FilterSchool(int filterType, SearchSchoolModel searchSchoolModel)
         {
             return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SchoolResponseModel>>> GetSchools()
+        [AllowAnonymous]
+        public async Task<ActionResult<PagingModel<SchoolResponseModel>>> GetPagingSchools(int currentPage)
         {
-            var schools = await _schoolService.GetSchools();
-            return Ok(schools);
+            var pagingModel = await _schoolService.GetPagingSchools(currentPage);
+            return Ok(pagingModel);
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<SchoolResponseModel>> GetSchool(Guid id)
         {
             var school = await _schoolService.GetSchool(id);
@@ -102,6 +105,7 @@ namespace TSM.Controllers
         }
 
         [HttpGet("{id}/majors")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<MajorModel>>> GetSchoolMajors(Guid id)
         {
             var majors = await _schoolMajorService.SchoolMajors(id);
@@ -131,6 +135,7 @@ namespace TSM.Controllers
         }
 
         [HttpGet("{id}/programs")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<MajorModel>>> GetSchoolPrograms(Guid id)
         {
             var programs = await _schoolEducationProgramService.SchoolEducationPrograms(id);

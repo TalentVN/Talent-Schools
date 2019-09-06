@@ -11,3 +11,13 @@
 select.form-control, input.form-control {
   height: 33px !important;
 }
+
+a:not([href]):not([tabindex]) {
+  color: #009688;
+  cursor: pointer;
+}
+
+a:not([href]):not([tabindex]):hover {
+  color: #004a43;
+  text-decoration: underline
+}

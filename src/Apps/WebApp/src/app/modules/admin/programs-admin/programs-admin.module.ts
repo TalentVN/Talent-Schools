@@ -5,6 +5,7 @@ import { ProgramsAdminRoutingModule } from './programs-admin-routing.module';
 import { ProgramsAdminComponent } from './programs-admin.component';
 import { EditProgramComponent } from './edit-program/edit-program.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ProgramsAdminRoutingModule
+    ProgramsAdminRoutingModule,
+    SharedModule
   ]
 })
 export class ProgramsAdminModule { }

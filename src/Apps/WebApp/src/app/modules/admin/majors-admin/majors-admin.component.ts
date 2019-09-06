@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MajorModel } from 'src/app/shared/models/Major.model';
 import { MajorService } from 'src/app/core/services/major.service';
+import { PagingModel } from 'src/app/shared/models/Paging.model';
 
 @Component({
   selector: 'app-majors-admin',
@@ -10,17 +11,21 @@ import { MajorService } from 'src/app/core/services/major.service';
 })
 export class MajorsAdminComponent implements OnInit {
 
-  majors: MajorModel[];
+  paging: PagingModel<MajorModel>;
 
   constructor(private majorService: MajorService) { }
 
   ngOnInit() {
-    this.getMajors();
+    this.getPagingMajors(1);
   }
 
-  private getMajors(): void {
-    this.majorService.getMajors().subscribe(
-      majors => this.majors = majors,
+  private getPagingMajors(currentPage: number): void {
+    if (currentPage < 1) {
+      currentPage = 1;
+    }
+
+    this.majorService.getPagingMajors(currentPage).subscribe(
+      paging => this.paging = paging,
       error => console.error(error)
     )
   }
@@ -28,16 +33,16 @@ export class MajorsAdminComponent implements OnInit {
   deleteMajor(id: string): void {
     if (confirm("Are you sure to delete this major?")) {
       this.majorService.deleteMajor(id).subscribe(
-        () => this.majors = this.majors.filter(s => s.id !== id),
+        () => this.getPagingMajors(this.paging.currentPage),
         error => console.error(error)
       );
     }
   }
 
-  changeActive(id: string): void {
+  changeActiveMajor(id: string): void {
     this.majorService.changeActiveMajor(id).subscribe(
       () => {
-        let currentMajor = this.majors.find(p => p.id == id);
+        let currentMajor = this.paging.data.find(p => p.id == id);
         currentMajor.isActive = !currentMajor.isActive;
       },
       error => console.error(error)

@@ -15,7 +15,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users; let i = index">
+    <tr *ngFor="let user of paging?.data; let i = index">
       <th scope="row">{{i+1}}</th>
       <td>{{user.email}}</td>
       <td>{{user.firstName}}</td>
@@ -24,8 +24,10 @@
       <td>{{user.address}}</td>
       <td>
         <a [routerLink]="[user.id]">Edit</a> |
-        <a [routerLink]="" (click)="deleteUser(user.id)">Delete</a>
+        <a (click)="deleteUser(user.id)">Delete</a>
       </td>
     </tr>
   </tbody>
 </table>
+<app-pagination [currentPage]="paging?.currentPage" [totalPages]="paging?.totalPages"
+  (onChangePage)="getPagingMajors($event)"></app-pagination>

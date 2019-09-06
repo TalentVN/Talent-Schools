@@ -3,6 +3,10 @@ export class MajorApi {
     return `api/v1/Majors`;
   }
 
+  public static getPagingMajorsApi(currentPage: number) {
+    return `api/v1/Majors/Page/${currentPage}`;
+  }
+
   public static getMajorApi(id: string) {
     return `api/v1/Majors/${id}`;
   }

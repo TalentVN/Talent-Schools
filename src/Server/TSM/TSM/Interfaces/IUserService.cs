@@ -8,7 +8,7 @@ namespace TSM.Interfaces
 {
     public interface IUserService
     {
-        Task<IEnumerable<UserAdminModel>> GetUsers();
+        Task<PagingModel<UserAdminModel>> GetPagingUsers(int currentPage);
         Task<UserAdminModel> GetUser(string id);
         Task<IdentityResult> CreateUser(UserAdminModel requestModel);
         Task<IdentityResult> UpdateUser(UserAdminModel requestModel);

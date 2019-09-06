@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TSM.Common;
 using TSM.Data.Application;
 using TSM.Data.Entities;
 using TSM.Interfaces;
@@ -27,9 +28,24 @@ namespace TSM.Services
 
         public async Task<IEnumerable<EducationProgramModel>> GetEducationPrograms()
         {
-            var programs = await _context.EducationPrograms.AsNoTracking().ToListAsync();
+            var programs = await _context.EducationPrograms.OrderBy(x => x.Name).AsNoTracking().ToListAsync();
 
             return _mapper.Map<IEnumerable<EducationProgramModel>>(programs);
+        }
+
+        public async Task<PagingModel<EducationProgramModel>> GetPagingEducationPrograms(int currentPage)
+        {
+            int programsCount = await _context.EducationPrograms.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)programsCount / Constants.DEFAULT_PAGING_SIZE);
+
+            var programs = await _context.EducationPrograms.Skip((currentPage - 1) * Constants.DEFAULT_PAGING_SIZE)
+                                                            .Take(Constants.DEFAULT_PAGING_SIZE)
+                                                            .OrderBy(x => x.Name)
+                                                            .AsNoTracking().ToListAsync();
+
+            var programModels =  _mapper.Map<IEnumerable<EducationProgramModel>>(programs);
+
+            return new PagingModel<EducationProgramModel>(currentPage, totalPages, programModels);
         }
 
         public async Task<EducationProgramModel> GetEducationProgram(Guid id)
