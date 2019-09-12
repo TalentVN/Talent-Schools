@@ -2,12 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { map, filter, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { SchoolService } from 'src/app/core/services/school.service';
+import { LocationService } from 'src/app/core/services/location.service';
+import { EducationProgramService } from 'src/app/core/services/education-program.service';
+import { MajorService } from 'src/app/core/services/major.service';
+
 import { SchoolTypeOption } from 'src/app/shared/options/school-type.option';
 import { CityModel } from 'src/app/shared/models/City.model';
 import { CountryModel } from 'src/app/shared/models/Country.model';
-import { LocationService } from 'src/app/core/services/location.service';
+import { ProgramModel } from 'src/app/shared/models/Program.model';
+import { MajorModel } from 'src/app/shared/models/Major.model';
 
 @Component({
   selector: 'app-edit-school',
@@ -22,15 +28,19 @@ export class EditSchoolComponent implements OnInit {
 
   schoolId: string;
   schoolTypes = SchoolTypeOption;
-  countries: CountryModel[];
-  cities: CityModel[];
+  countries$: Observable<CountryModel[]>;
+  cities$: Observable<CityModel[]>;
+  programs$: Observable<ProgramModel[]>;
+  majors$: Observable<MajorModel[]>;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private schoolService: SchoolService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private programService: EducationProgramService,
+    private majorService: MajorService
   ) { }
 
   ngOnInit() {
@@ -43,6 +53,8 @@ export class EditSchoolComponent implements OnInit {
       website: [''],
       coverUrl: [''],
       description: [''],
+      programs: [null, Validators.required],
+      majors: [null, Validators.required],
       location: this.formBuilder.group({
         countryId: ['', Validators.required],
         cityId: ['', Validators.required],
@@ -55,6 +67,8 @@ export class EditSchoolComponent implements OnInit {
     this.getSchool();
     this.getCountries();
     this.getCities();
+    this.getPrograms();
+    this.getMajors();
   }
 
   // convenience getter for easy access to form fields
@@ -68,42 +82,44 @@ export class EditSchoolComponent implements OnInit {
       filter(id => !!id),
       switchMap(id => this.schoolService.getSchool(id))
     ).subscribe(
-      school => this.editForm.patchValue(school),
+      school => {
+        this.editForm.patchValue(school);
+
+        // Load depend
+        this.loadSchoolPrograms(school.id);
+        this.loadSchoolMajors(school.id);
+      },
       error => console.error(error)
     );
   }
 
   private getCountries(): void {
-    this.locationService.getCountries().subscribe(
-      countries => {
-        this.countries = countries;
-
-        if (!this.schoolId) {
-          this.editForm.patchValue({
-            location: {
-              countryId: countries[0].id
-            }
-          });
-        }
-      },
-      error => console.error(error)
-    );
+    this.countries$ = this.locationService.getCountries();
   }
 
   private getCities(): void {
-    this.locationService.getCities().subscribe(
-      cities => {
-        this.cities = cities;
+    this.cities$ = this.locationService.getCities();
+  }
 
-        if (!this.schoolId) {
-          this.editForm.patchValue({
-            location: {
-              cityId: cities[0].id
-            }
-          });
-        }
-      },
-      error => console.error(error)
+  private getPrograms(): void {
+    this.programs$ = this.programService.getPrograms();
+  }
+
+  private getMajors(): void {
+    this.majors$ = this.majorService.getMajors();
+  }
+
+  private loadSchoolPrograms(schoolId: string) {
+    this.schoolService.getSchoolPrograms(schoolId).subscribe(
+      programs => this.editForm.patchValue({ programs: programs }),
+      error => console.log(error)
+    );
+  }
+
+  private loadSchoolMajors(schoolId: string) {
+    this.schoolService.getSchoolMajors(schoolId).subscribe(
+      data => this.editForm.patchValue({ majors: data }),
+      error => console.log(error)
     );
   }
 
@@ -115,7 +131,7 @@ export class EditSchoolComponent implements OnInit {
     }
 
     console.log(this.editForm.value);
-      
+
     this.loading = true;
     if (this.schoolId) {
       this.updateSchool();
@@ -126,7 +142,7 @@ export class EditSchoolComponent implements OnInit {
 
   private updateSchool(): void {
     this.schoolService.updateSchool(this.editForm.value).subscribe(
-      () => this.router.navigate(['admin']),
+      () => this.router.navigate(['..'], { relativeTo: this.route }),
       error => {
         console.error(error);
         this.loading = false;

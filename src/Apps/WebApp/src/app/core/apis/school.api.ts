@@ -3,6 +3,10 @@ export class SchoolApi {
         return 'api/v1/Schools';
     }
 
+    public static getPagingSchoolsApi(currentPage: number): string {
+        return `api/v1/Schools?currentPage=${currentPage}`
+    }
+
     public static getSchoolApi(schoolId: string) {
         return `api/v1/Schools/${schoolId}`;
     }

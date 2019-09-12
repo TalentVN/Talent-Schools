@@ -68,7 +68,7 @@ export class EditMajorComponent implements OnInit {
 
   private updateMajor(): void {
     this.majorService.updateMajor(this.editForm.value).subscribe(
-      () => this.router.navigate(['../'], { relativeTo: this.route }),
+      () => this.router.navigate(['..'], { relativeTo: this.route }),
       error => {
         console.error(error);
         this.loading = false;
@@ -77,7 +77,7 @@ export class EditMajorComponent implements OnInit {
 
   private createMajor(): void {
     this.majorService.createMajor(this.editForm.value).subscribe(
-      () => this.router.navigate(['../'], { relativeTo: this.route }),
+      () => this.router.navigate(['..'], { relativeTo: this.route }),
       error => {
         console.error(error);
         this.loading = false;

@@ -17,7 +17,9 @@ export class PaginationComponent implements OnInit {
   }
 
   changePage(page: number): void {
-    this.onChangePage.emit(page);
+    if (page > 0 && page <= this.totalPages) {
+      this.onChangePage.emit(page);
+    }
   }
 
   makePaging(): Array<number> {

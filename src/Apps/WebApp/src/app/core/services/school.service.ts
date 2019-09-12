@@ -9,6 +9,7 @@ import { SchoolModel } from '../../shared/models/School.model';
 import { MajorModel } from '../../shared/models/Major.model';
 import { ProgramModel } from 'src/app/shared/models/Program.model';
 import { SearchModel } from '../../shared/models/Searching.model';
+import { PagingModel } from 'src/app/shared/models/Paging.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,8 @@ export class SchoolService {
     private httpClient: HttpClient
   ) { }
 
-  public getSchools(): Observable<SchoolModel[]> {
-    return this.httpClient.get<SchoolModel[]>(`${environment.coreApi}/${SchoolApi.getSchoolsApi()}`);
+  public getPagingSchools(currentPage: number): Observable<PagingModel<SchoolModel>> {
+    return this.httpClient.get<PagingModel<SchoolModel>>(`${environment.coreApi}/${SchoolApi.getPagingSchoolsApi(currentPage)}`);
   }
 
   public getSchool(schoolId: string): Observable<SchoolModel> {

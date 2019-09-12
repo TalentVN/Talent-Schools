@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { SchoolModel } from 'src/app/shared/models/School.model';
 import { SchoolService } from 'src/app/core/services/school.service';
+import { PagingModel } from 'src/app/shared/models/Paging.model';
 
 @Component({
   selector: 'app-schools-admin',
@@ -9,26 +11,26 @@ import { SchoolService } from 'src/app/core/services/school.service';
 })
 export class SchoolsAdminComponent implements OnInit {
 
-  schools: SchoolModel[];
+  paging: PagingModel<SchoolModel>;
 
   constructor(private schoolService: SchoolService) { }
 
   ngOnInit() {
-    this.getSchools();
+    this.getPagingSchools(1);
   }
 
-  private getSchools(): void {
-    this.schoolService.getSchools().subscribe(
-      schools => this.schools = schools,
-      error => console.log(error)
+  private getPagingSchools(currentPage: number): void {
+    this.schoolService.getPagingSchools(currentPage).subscribe(
+      paging => this.paging = paging,
+      error => console.error(error)
     );
   }
 
   deleteSchool(id: string): void {
     if (confirm("Are you sure to delete this school?")) {
       this.schoolService.deleteSchool(id).subscribe(
-        () => this.schools = this.schools.filter(s => s.id !== id),
-        error => console.log(error)
+        () => this.getPagingSchools(this.paging.currentPage),
+        error => console.error(error)
       );
     }
   }

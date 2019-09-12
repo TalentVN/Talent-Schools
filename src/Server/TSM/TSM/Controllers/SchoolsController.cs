@@ -81,7 +81,7 @@ namespace TSM.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> PostSchool(CreateSchoolRequestModel requestModel)
+        public async Task<ActionResult<Guid>> PostSchool(SchoolRequestModel requestModel)
         {
             var schoolId = await _schoolService.CreateSchool(requestModel);
 
@@ -89,7 +89,7 @@ namespace TSM.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutSchool(UpdateSchoolRequestModel requestModel)
+        public async Task<IActionResult> PutSchool(SchoolRequestModel requestModel)
         {
             await _schoolService.UpdateSchool(requestModel);
 

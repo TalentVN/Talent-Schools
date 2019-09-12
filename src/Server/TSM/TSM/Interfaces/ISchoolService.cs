@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TSM.Models;
 using TSM.Models.RequestModels;
@@ -12,8 +11,8 @@ namespace TSM.Interfaces
     {
         Task<PagingModel<SchoolResponseModel>> GetPagingSchools(int currentPage);
         Task<SchoolResponseModel> GetSchool(Guid id);
-        Task<Guid> CreateSchool(CreateSchoolRequestModel requestModel);
-        Task UpdateSchool(UpdateSchoolRequestModel requestModel);
+        Task<Guid> CreateSchool(SchoolRequestModel requestModel);
+        Task UpdateSchool(SchoolRequestModel requestModel);
         Task DeleteSchool(Guid id);
         Task<IEnumerable<SchoolResponseModel>> SearchSchools(SearchSchoolModel searchModel);
     }

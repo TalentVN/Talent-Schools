@@ -68,7 +68,7 @@ export class EditProgramComponent implements OnInit {
 
   private updateProgram(): void {
     this.programService.updateProgram(this.editForm.value).subscribe(
-      () => this.router.navigate(['../'], { relativeTo: this.route }),
+      () => this.router.navigate(['..'], { relativeTo: this.route }),
       error => {
         console.error(error);
         this.loading = false;
@@ -77,7 +77,7 @@ export class EditProgramComponent implements OnInit {
 
   private createProgram(): void {
     this.programService.createProgram(this.editForm.value).subscribe(
-      () => this.router.navigate(['../'], { relativeTo: this.route }),
+      () => this.router.navigate(['..'], { relativeTo: this.route }),
       error => {
         console.error(error);
         this.loading = false;
