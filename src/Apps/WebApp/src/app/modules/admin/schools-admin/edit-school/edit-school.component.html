@@ -22,11 +22,12 @@
   <div class="row">
     <div class="form-group col">
       <label>School Type:</label>
-      <select class="form-control" formControlName="schoolType">
-        <option *ngFor="let type of schoolTypes" [ngValue]="type.value">
-          {{type.text}}
-        </option>
-      </select>
+      <ng-select formControlName="schoolType" [items]="schoolTypes" bindLabel="text" bindValue="value"
+        [ngClass]="{ 'is-invalid': (submitted || f.schoolType.dirty) && f.schoolType.invalid }">
+      </ng-select>
+      <div *ngIf="(submitted || f.schoolType.dirty) && f.schoolType.invalid" class="invalid-feedback">
+        <div *ngIf="f.schoolType.errors.required">School's type is required</div>
+      </div>
     </div>
     <div class="form-group col">
       <label for="tuiTion">Tuition:</label>
@@ -47,24 +48,18 @@
     <div class="row">
       <div class="form-group col">
         <label>Coutry:</label>
-        <select class="form-control" formControlName="countryId"
+        <ng-select formControlName="countryId" [items]="countries$ | async" bindLabel="name" bindValue="id"
           [ngClass]="{ 'is-invalid': submitted && fLocation.countryId.invalid }">
-          <option *ngFor="let country of countries$ | async" [ngValue]="country.id">
-            {{country.name}}
-          </option>
-        </select>
+        </ng-select>
         <div *ngIf="submitted && fLocation.countryId.invalid" class="invalid-feedback">
           <div *ngIf="fLocation.countryId.errors.required">Country is required</div>
         </div>
       </div>
       <div class="form-group col">
         <label>Cities:</label>
-        <select class="form-control" formControlName="cityId"
+        <ng-select formControlName="cityId" [items]="cities$ | async" bindLabel="name" bindValue="id"
           [ngClass]="{ 'is-invalid': submitted && fLocation.cityId.invalid }">
-          <option *ngFor="let city of cities$ | async" [value]="city.id">
-            {{city.name}}
-          </option>
-        </select>
+        </ng-select>
         <div *ngIf="submitted && fLocation.cityId.invalid" class="invalid-feedback">
           <div *ngIf="fLocation.cityId.errors.required">City is required</div>
         </div>

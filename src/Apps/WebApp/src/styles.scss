@@ -8,8 +8,18 @@
   margin-bottom: 50px;
 }
 
-select.form-control, input.form-control {
-  height: 33px !important;
+input.form-control {
+  height: 40px;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+  height: 40px;
+  min-height: unset;
+}
+
+.ng-select.ng-select-single .ng-select-container .ng-value-container {
+  padding: unset;
+  border-top: 8px solid transparent;
 }
 
 .ng-select.ng-select-focused .ng-select-container:after {
